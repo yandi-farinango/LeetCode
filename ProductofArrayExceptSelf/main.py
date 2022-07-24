@@ -11,45 +11,58 @@ nums = [1,2,3,4]
 outPut = [24,12,8,6]
 """
 
+
 """
-We can calculate pre-fix products, 
-multiply by post-fix products
-final answer should be product of nums 
-except nums[i]
+We can do this problem taking a two-pass approach
 
-We can iterate through nums 2x 
+We want all the products of nums except nums[i]
 
-First Pass
-We'll iterate through nums 
-and store pre-fix products in outPut array 
+That means we want prefix nums[i] * postfix nums[i]
 
-Second Pass 
-We'll iterate through array in REVERSE
-calculate post-fix
-and multiply against
-pre-fix products already in our outPut array 
+
+We'll be using an output array to store prefix & postfix
+and, we will return output array as our answer 
+
+
+
+On our first pass, 
+we'll be calculating prefix
+
+We'll have a variable prefix, which will get updated
+as we traverse through the array going forward 
+
+
+
+On our second pass, 
+We'll have a variable postfix, 
+which will get updated as we traverse through the array going in reverse 
+
+We will multiply our postfix 
+against the respective prefix value in our output array
+
+return outPut array        
 """
 
 
 class Solution(object):
     def productExceptSelf(self, nums):
-        # declare outPut array initially w 1s
+        # initial outPut array
         outPut = [1] * len(nums)
 
-        # we'll start w/ default prefix 1
         prefix = 1
         for i in range(len(nums)):
+            # outPut[i] = respective prefix
             outPut[i] = prefix
             # updating prefix
             prefix *= nums[i]
 
         postfix = 1
-        # iterating through nums in reverse
         for i in range(len(nums) - 1, -1, -1):
-            # update outPut w postfix product
+            # prefix, stored in output[i], is multiplied against postfix
             outPut[i] *= postfix
-            # update postfix
+            # updating postfix
             postfix *= nums[i]
+
         return outPut
 
 
