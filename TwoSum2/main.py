@@ -61,11 +61,11 @@ class Solution(object):
         leftPointer, rightPointer = 0, len(nums) - 1
 
         while leftPointer < rightPointer:
-            sum = nums[leftPointer] + nums[rightPointer]
+            currentSum = nums[leftPointer] + nums[rightPointer]
 
-            if sum < target:
+            if currentSum < target:
                 leftPointer += 1
-            elif sum > target:
+            elif currentSum > target:
                 rightPointer -= 1
             # else sum == target
             else:
