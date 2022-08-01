@@ -35,6 +35,7 @@ class Solution(object):
 
         freqMap = {}
         bucket = [[] for i in range(len(nums) + 1)]
+        # bucket = [[]] * (len(nums) + 1)
 
         for n in nums:
             freqMap[n] = 1 + freqMap.get(n, 0)
