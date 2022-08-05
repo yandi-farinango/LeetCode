@@ -20,22 +20,27 @@ containing the same letter
 
 
 """
-We're to form a sliding window 
+We're going to build a sliding window 
+using two pointers 
 
-We also want to calculate a charCount
+We also want to use a charCount hashmap 
+to map char:count
 
-The len(window) - most frequent charCount = number of letters to replace!!
-                                            number of letters to replace <= k
-if number of letters to replace > k 
-we'll need to shift our leftPointer 
-and b/c we shifted our pointer 
-we need to decrement the count 
-of the char we just moved past                                             
-                                            
+As we traverse through string S
+using our rightPointer
+We can increment a charCount 
 
-We'll be keeping track of the max len using a res variable
+    *** we also want to shift our left pointer 
+        when number of chars to switch > k 
 
+        * number of chars to switch = len(window) - max charCount
+
+maxLen will be calculated
+res = max(res, rightPointer - leftpointer + 1)
+
+return res
 """
+
 
 
 class Solution(object):
@@ -44,31 +49,32 @@ class Solution(object):
         charCount = {}
         res = 0
 
-        # leftPointer set at 0
         leftPointer = 0
 
-        # rightPointer will iterate through s
+        # use rightPointer to iterate
         for rightPointer in range(len(s)):
-            # mapping char:count
+            # increment charCount as we build our sliding window
             charCount[s[rightPointer]] = 1 + charCount.get(s[rightPointer], 0)
 
-            # number of letters to replace = len(window) - max(charCount)
-            # if number of letters to replace > k
-                # we want to shift leftPointer
-                # and decrement count s[leftPointer]
-            while ((rightPointer - leftPointer + 1) -
-                   max(charCount.values())) > k:
+            # shift pointer when chars to switch > k
+            # decrement respective charCount
+            while ((rightPointer - leftPointer + 1) - max(charCount.values())) > k:
                 charCount[s[leftPointer]] -= 1
                 leftPointer += 1
 
-            # update res for max window length
             res = max(res, rightPointer - leftPointer + 1)
+
         return res
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-    k = 1
-    s = "AABABBA"
-    print(Solution().characterReplacement(s, k))
+    k1 = 1
+    s1 = "AABABBA"
+
+    k2 = 2
+    s2 = "ABAB"
+
+    print(Solution().characterReplacement(s1, k1))
+    print(Solution().characterReplacement(s2, k2))
