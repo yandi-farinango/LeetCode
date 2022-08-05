@@ -6,20 +6,6 @@ w/o repeating characters
 """
 
 """
-We can use a start checking 
-len of substrings 
-starting at pos 0
-until we get to a duplicate
-if we reach a duplicate, 
-we'll remove from the left
-of our sliding window
-
-Sliding window will be formed
-using two pointers 
-
-"""
-
-"""
 We'll form a sliding window using two pointers
 And well use a set to check for duplicates
 
