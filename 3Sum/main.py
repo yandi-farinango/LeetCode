@@ -52,49 +52,31 @@ taking the twoSum2 approach
 class Solution(object):
     def threeSum(self, nums):
 
+        nums.sort()
         res = []
 
-        nums.sort()
-
-        for idx, val in enumerate(nums):
-            # if were not at the first index
-            # and our value is = previous value,        **previous val is represented as nums[idx - 1]
-            # we continue
-            if idx > 0 and val == nums[idx - 1]:
+        for index, val in enumerate(nums):
+            # skip duplicates
+            if index > 0 and val == nums[index - 1]:
                 continue
 
-            # from here we can take twoSum2 approach
-            # on the remaining portion of nums array
-            # begining at idx + 1
-            # ending at len(nums) - 1
-            left, right = idx + 1, len(nums) - 1
+            left, right = index + 1, len(nums) - 1
 
             while left < right:
-                threeSum = val + nums[left] + nums[right]
-
-                # if our threeSum is too large
-                # decrease by shifting right pointer
-
-                # if our threeSum is too small
-                # increase by shifting left pointer
-                if threeSum > 0:
+                # if our sum > 0, we need to decrease, i.e shift right pointer
+                if (val + nums[left] + nums[right]) > 0:
                     right -= 1
-                elif threeSum < 0:
+                # if we're less than 0, we need to increase, i.e shift left pointer
+                elif (val + nums[left] + nums[right]) < 0:
                     left += 1
                 else:
                     res.append([val, nums[left], nums[right]])
-
-                    # we may have other solutions
-                    # that would work w/ a different j
-                    # so we need to shift our left pointer
                     left += 1
 
-                    # but we want to again ignore duplicates
-                    # so we also shift our left pointer on duplicates
-                    # but we never want left pointer to be shifter < right
+                    # we want to ignor duplicates in j and k as well
+                    # so we shift our left pointer on duplicates
                     while nums[left] == nums[left - 1] and left < right:
                         left += 1
-
         return res
 
 
