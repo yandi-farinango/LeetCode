@@ -102,33 +102,26 @@ class Solution(object):
         return resVol
 
     def maxArea(self, height):
-        # resVol to be updated as we traverse through height array
-        resVol = 0
-
-        # set pointers on OPPOSITE ends
-        # ***
-        # By setting on opposite ends,
-        # we are already starting at max distance
-        # between x-coords
         left, right = 0, len(height) - 1
 
-        while left < right:
-            # vol is calculated the same
-            vol = (right - left) * min(height[left], height[right])
-            # update is the same
-            resVol = max(vol, resVol)
+        maxArea = 0
 
-            # if our height at pos LEFT is less than
-            # height at pos RIGHT, shift LEFT
+        while left < right:
+            # calculate area
+            area = min(height[left], height[right]) * (right - left)
+
+            # shift respective pointer
             if height[left] < height[right]:
                 left += 1
             elif height[right] < height[left]:
                 right -= 1
-                # if theyre equal, we can shift either, doesnt matter
             else:
                 left += 1
 
-        return resVol
+            # update maxArea
+            maxArea = max(area, maxArea)
+
+        return maxArea
 
 
 
