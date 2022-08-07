@@ -15,40 +15,36 @@ a permutation of s1
             * return True if substring s1 in s2
 """
 
+
 """
-We can take a sliding window approach 
-where we look at every "window" 
-that is size of s1 
-and we'll use our window to iterate through s2
+We can use an arrayMap 
+to map letters a-z at indicies 0-26
+Where value corresponds to the charCount 
 
-we can use two hashmaps to map s1 chars 
+We can then use a sliding window 
+of the same size as s1
+which will be formed using two pointers 
 
-our second hashmap will be used to map chars
-of the current window we are at 
+left pointer at 0 
+right pointer will be used to traverse s2 
 
-we'll be mapping char count 
-BUT also, having default val of 0 
-for chars not existing in s1 or 
-our sliding window 
-i.e similar to one-hot encoding 
+we'll also have a variable, matches, 
+that will count the number of "matches"
+in our two charMaps 
 
-Well check if hashmaps are == 
-as we traverse through s2 
-using our window 
+So, we'll need to 
+    update our charCount as we shift our window 
+    and update matches as our charCount changes 
 
-We'll use a variable, matches
-that will be incremented
-when we have matching charCount 
+    i.e if we shift our window and our charCount increases, 
+    and our matches are no longer the same, 
+    we'll need to decrement matches 
+    similarly, if we shift our window 
+    and our charCount now = charCount s1 
+    we'll need to increment our matches
 
-when matches add to 26, 
-we'll know weve found a permutation 
-
-
-    *** edge case
-    if len(s1) > len(s2) 
-    we return false 
+    We'll return True if matches == 26 
 """
-
 
 
 class Solution(object):
@@ -57,80 +53,75 @@ class Solution(object):
         if len(s1) > len(s2):
             return False
 
-        # declaring arrays for mapping
-        s1map = [0] * 26
-        s2map = [0] * 26
+        s1Map = [0] * 26
+        s2Map = [0] * 26
 
-        # mapping s1
+        # We'll map s1 first
+        # since charCounts will not change
+        # like a sliding window charCount
         for i in range(len(s1)):
-            s1map[ord(s1[i]) - ord("a")] += 1
-            s2map[ord(s2[i]) - ord("a")] += 1
+            s1Map[ord(s1[i]) - ord("a")] += 1
+            s2Map[ord(s2[i]) - ord("a")] += 1
 
-        # matches variable
         matches = 0
 
-        # iterating through maps
+        # now we'll traverse both arrays and update matches
         for i in range(26):
-            if s1map[i] == s2map[i]:
+            if s1Map[i] == s2Map[i]:
                 matches += 1
-            else:
-                0
 
-        # sliding window
+        # now sliding window
 
         left = 0
 
-        # we start at len(s1) b/c
-        # we already iterated through first indices above
-        # when mapping s1
         for right in range(len(s1), len(s2)):
             if matches == 26:
                 return True
 
-            # getting the index
-            # where our right pointer at
-            idx = ord(s2[right]) - ord("a")
+            # bc we are using the loop above to
+            # iterate through string s2
+            # we'll need to get the charMap index
+            # of the letter our right pointer is on
+            index = ord(s2[right]) - ord("a")
 
-            # incrementing s2map at idx
-            s2map[idx] += 1
+            # and we'll need to increment
+            # s2map at the respective index
+            s2Map[index] += 1
 
-            # NOW...
-            # Since we've incremented the count at idx
-            # we check if it is matching the idx at s2map[idx]
-            # and increment matches
-            if s1map[idx] == s2map[idx]:
+            # update matches s1Map[index] == s2Map[index]
+            if s2Map[index] == s1Map[index]:
                 matches += 1
-                # if s1map[idx] + 1 == s2map[idx]
-                # we've incremented our s2map   *line 95
-                # too much
-                # so we have to decrement matches
-            elif s1map[idx] + 1 == s2map[idx]:
+            # if after incrementing s2Map[index]
+            # above, in line 64
+            # our s2Map[index] == s1Map[index] + 1
+            # we've incremented s2
+            # too much
+            elif s2Map[index] == s1Map[index] + 1:
+                # update matches
                 matches -= 1
 
-            # ***Left Pointer Adjustment***
+                # left pointer adjustment
+            index = ord(s2[left]) - ord("a")
 
-            idx = ord(s2[left]) - ord("a")
-            # we decrement count here b/c
-            # we just removed this variable
-            # as we're shifting our sliding window
-            s2map[idx] -= 1
+            # we decrease s2Map at index
+            # bc we will be shifting our left pointer
+            s2Map[index] -= 1
 
-            if s1map[idx] == s2map[idx]:
+            if s2Map[index] == s1Map[index]:
                 matches += 1
-            # opposite of right
-            elif s1map[idx] - 1 == s2map[idx]:
+
+            # if, by decreasing our our s2Map[index] charCount
+            # in line 90
+            # we are now == to s1Map[index] - 1
+            # we've decreased too much
+            # update matches
+            if s2Map[index] == s1Map[index] - 1:
                 matches -= 1
-            # increment left pointer
+
+            # update left pointer
             left += 1
-        # we need to check again after we've done our shifting
+
         return matches == 26
-
-
-
-
-
-
-
 
 
 # Press the green button in the gutter to run the script.
