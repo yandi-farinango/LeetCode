@@ -13,57 +13,64 @@ outPut = [24,12,8,6]
 
 
 """
-We can do this problem taking a two-pass approach
+To calculate product of array except self, 
+We'll be multiplying prefix elements * postfix elements 
 
-We want all the products of nums except nums[i]
+We can do this efficiently by
+First traversing the array 
+And calculating prefix products 
 
-That means we want prefix nums[i] * postfix nums[i]
+And, on our second pass, 
+Traverse the array in reverse
+Calculating our postfix products 
 
+and multiplying prefix * postfix 
 
-We'll be using an output array to store prefix & postfix
-and, we will return output array as our answer 
+We'll use a res [1] variable of len(nums)
 
+and well use a prefix variable 
+initially set = 1
+which will be updated as we loop through 
 
+after we've done our first pass
+we'll loop through res backwards 
 
-On our first pass, 
-we'll be calculating prefix
+similar to above, 
+we'll use a postfix variable 
+initially set = 1
+that will be updated as we loop 
 
-We'll have a variable prefix, which will get updated
-as we traverse through the array going forward 
-
-
-
-On our second pass, 
-We'll have a variable postfix, 
-which will get updated as we traverse through the array going in reverse 
-
-We will multiply our postfix 
-against the respective prefix value in our output array
-
-return outPut array        
+return res
 """
 
 
 class Solution(object):
     def productExceptSelf(self, nums):
-        # initial outPut array
-        outPut = [1] * len(nums)
 
+        res = [1] * len(nums)
+
+        # prefix variable initally set = 1
+        # will be continously updated in our loop
         prefix = 1
+
         for i in range(len(nums)):
-            # outPut[i] = respective prefix
-            outPut[i] = prefix
-            # updating prefix
+            res[i] = prefix
+            # update prefix
             prefix *= nums[i]
 
+        # postfix variable
+        # will be contiously updated in our loop
         postfix = 1
+
+        # looping backwards
         for i in range(len(nums) - 1, -1, -1):
-            # prefix, stored in output[i], is multiplied against postfix
-            outPut[i] *= postfix
-            # updating postfix
+            # res[i] contains prefixs
+            # multiplying prefix * postfix
+            res[i] *= postfix
+            # update postfix
             postfix *= nums[i]
 
-        return outPut
+        return res
 
 
 if __name__ == "__main__":
