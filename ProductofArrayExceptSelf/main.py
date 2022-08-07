@@ -49,8 +49,8 @@ class Solution(object):
 
         res = [1] * len(nums)
 
-        # prefix variable initally set = 1
-        # will be continously updated in our loop
+        # prefix variable initially set = 1
+        # will be continuously updated in our loop
         prefix = 1
 
         for i in range(len(nums)):
@@ -59,7 +59,7 @@ class Solution(object):
             prefix *= nums[i]
 
         # postfix variable
-        # will be contiously updated in our loop
+        # will be continuously updated in our loop
         postfix = 1
 
         # looping backwards
