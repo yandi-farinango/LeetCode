@@ -88,8 +88,10 @@ class Solution(object):
 if __name__ == '__main__':
 
     tokens = ["2","1","+","3","*"]
-    tokens2 = ["4","13","5","/","+"]
+    tokens2 = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]
 
     print(Solution().evalRPN(tokens))
     print(Solution().evalRPN(tokens2))
+
+
 
