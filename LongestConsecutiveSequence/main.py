@@ -15,54 +15,56 @@ length = 9
 """
 
 
+
 """
-We can use a set! 
+We want to return the len 
+of the LongestConsecutiveSequence 
 
-We can iterate through nums 
-and check if n-1 exists in our set 
-        
-if n-1 does NOT exist, 
-we know n can be considered the START
-of a sequence 
+To do this, we need to identify 
+What is a sequence 
+i.e where a sequence begins 
 
-Once we've determined n is the start of a sequence, 
-we can have a counter for length 
-that will be incremented while n + length exists in our sequence 
-    (n+length is basically a reference to our next consecutive numbers)
-    
-To return MAX LENGTH, 
-we have to remember to declare a maxLength variable prior to our loops, 
-our maxLength variable will continuously get updated 
-as we calculate our lengths
+If we use a convert nums to a set, 
 
-we return maxLength
+as we iterate through n in nums 
+we can check if n-1 exists in our set 
+
+If it does not exist in our set, 
+we know n can be considered the start of a sequence 
+
+We can use a variable Length, 
+that can be incremented while n + length exists in our sequence 
+B/c we are incrementing length, 
+we can use n + length 
+as a reference to the next elements in our sequence 
+
+We'll also have a global variable maxLen that will 
+be updated w max(len, maxLen)
+
+return maxLen
 """
 
 class Solution(object):
     def longestConsecutive(self, nums):
 
-        # Create set from nums
-        nums = set(nums)
+        maxLen = 0
 
-        maxLength = 0
+        # convert nums to a set
+        numSet = set(nums)
 
         for n in nums:
-            # determining if n is the START of a sequence
-            # n is the START of a sequence
-            # if n-1 does NOT exist in our set
-            if (n - 1) not in nums:
-                # counter for length
+            # if n - 1 is NOT in our numSet
+            # were at the start of a sequence
+
+            if (n - 1) not in numSet:
                 length = 0
 
-                # increment length while
-                # next consecutive number exits in our set
-                while (n + length) in nums:
+                while n + length in numSet:
                     length += 1
 
-            # updating maxLength
-            maxLength = max(length, maxLength)
+                maxLen = max(length, maxLen)
 
-        return maxLength
+        return maxLen
 
 
 if __name__ == '__main__':
