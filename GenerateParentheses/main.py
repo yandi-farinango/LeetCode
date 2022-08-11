@@ -74,10 +74,13 @@ class Solution(object):
         return res
 
 
+
+
+
 if __name__ == '__main__':
 
     n = 3
-    n2 = 1
+    # n2 = 1
 
     print(Solution().generateParenthesis(n))
-    print(Solution().generateParenthesis(n2))
+    # print(Solution().generateParenthesis(n2))
