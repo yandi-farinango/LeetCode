@@ -25,56 +25,45 @@ constant extra space
 
 
 """
-This problem requires us to use
-CONSTANT extra space 
-b/c of this 
-we wont be able to use our previous hashmap solution
+This solution must be solved using only constant extra space 
 
-So... 
-We can use two-pointers!!
+We are also told that the array is already SORTED 
 
-We are told nums is SORTED
+We can use two pointers
+On opposite ends of numbers array 
 
-We can set our pointers to reference 
-both ends of nums array 
+if numbers[left] + numbers[right] < 9 
+well have to shift our left pointer up 
 
-If we add first number + last number 
-and ans is > TARGET 
-we know we've gone too far, 
-and we can adjust 
-end pointer by moving left 
-as we move left, our next number will be smaller 
+if numbers[left] + numbers[right] > 9 
+well have to shift our right pointer down 
 
-Now if we add right + left pointer 
-and ans is < TARGET
-we know our LEFT pointer is too small 
-We can adjust by shifting pointer right, 
-to a greater number 
+else * numbers[left] + numbers[right] == target
 
-We do this until rightPointer + leftPointer = Target
+so we can return [left + 1, right + 1]
 """
 
 
 class Solution(object):
-    def twoSum(self, nums, target):
-        # initialize pointers at opposite ends
-        leftPointer, rightPointer = 0, len(nums) - 1
+    def twoSum(self, numbers, target):
+        left = 0
 
-        while leftPointer < rightPointer:
-            currentSum = nums[leftPointer] + nums[rightPointer]
+        right = len(numbers) - 1
 
-            if currentSum < target:
-                leftPointer += 1
-            elif currentSum > target:
-                rightPointer -= 1
-            # else sum == target
+        while left < right:
+
+            # shift left pointer up
+            if numbers[left] + numbers[right] < target:
+                left += 1
+
+            # shift right pointer down
+            elif numbers[left] + numbers[right] > target:
+                right -= 1
+
             else:
-                # problem specifically asked to return indices
-                # added by one
-                # i.e first index is considered one,
-                # not zero
-                return [leftPointer + 1, rightPointer + 1]
+                return [left + 1, right + 1]
 
+        return
 
 
 if __name__ == '__main__':
