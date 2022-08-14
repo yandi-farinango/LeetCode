@@ -18,7 +18,6 @@ containing the same letter
         output = 4; AAAA
 """
 
-
 """
 We're going to build a sliding window 
 using two pointers 
@@ -42,7 +41,6 @@ return res
 """
 
 
-
 class Solution(object):
     def characterReplacement(self, s: str, k: int) -> int:
 
@@ -56,7 +54,18 @@ class Solution(object):
             # increment charCount as we build our sliding window
             charCount[s[rightPointer]] = 1 + charCount.get(s[rightPointer], 0)
 
-            # shift pointer when chars to switch > k
+            """            
+            *** COMMON MISTAKE ***
+            
+            we don't need to increment right pointer here
+            as it is being incremented in our loop above
+            
+            while (((right - left + 1) - max(charMap.values())) <= k):
+                right += 1
+                
+            """
+
+            # shift left pointer when chars to switch > k
             # decrement respective charCount
             while ((rightPointer - leftPointer + 1) - max(charCount.values())) > k:
                 charCount[s[leftPointer]] -= 1
@@ -69,7 +78,6 @@ class Solution(object):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-
     k1 = 1
     s1 = "AABABBA"
 
