@@ -14,30 +14,59 @@ all combinations of well-formed parentheses
 
 
 """
-From n, we can deduce, 
-We will need 3-open parentheses 
-and 3-closed parentheses 
-to have a well-formed set 
+Since we'll be repeatedly adding parentheses, 
+We can solve this recursively 
 
-Another thing we can deduce is
-We must start w/ an open parentheses 
-    * no well-formed pair can start w/ closed )(
+We'll need to know the following rules:
+    *** A well-formed pair can be described when 
+        openCount == closeCount == n
+    *** Only add open in openCount < n 
+    *** Only add close is closeCount < open 
 
-Another thing we can see is 
-that we can only add closing parentheses 
-If the count of our open parentheses is greater than close 
-    *   (() - We can add close here b/c open count = 2; close count = 1
-        ()) - THIS DOESNT WORK b/c open count = 1; close count = 2
-        
 
-So since we have a lot of repeated decisions 
-We can solve this problem recursively 
+We'll use two stacks:
+    res - where we'll append combinations to 
+    stack - which we will use to form combinations; 
 
-    *** Only add open if open count < n 
-    *** only add closed if closed count < open count 
-    *** STOP adding parentheses when open count == close count == n 
-    
+We'll define a fn, backtrack, 
+which accepts parameters(openCount, closeCount)
+
+within our fn
+We'll implement the rules stated above 
+
+Rule 1
+if openCount == closeCount == n:
+we've created a well-formed combination, append "".join(stack) to our final result 
+
+Rule 2
+if openCount < n
+we'll append open to our STACK
+
+we recursively call backtrack
+and increment open count 
+    backtrack(openCount + 1, closeCount)
+
+    (*)
+
+Rule 3
+if closeCount < openCount 
+we'll append close to our STACK
+
+we recursively call backtrack
+and increment closeCount
+    backtrack(openCount, closeCount + 1)
+
+    (*)
+
+    (*) we'll want to pop() after every recursive call as this is how the algo will 
+    continuously form different combinations 
+
+
+we'll pass initial value backtrack(0,0) for recursive call
+
+return res
 """
+
 
 class Solution(object):
     def generateParenthesis(self, n):
@@ -48,19 +77,15 @@ class Solution(object):
         def backtack(openCount, closeCount):
             # baseCase
             if openCount == closeCount == n:
-                # joining into one string and appending to res
+                # joining stack together and appending to res
                 res.append("".join(stack))
                 return
 
             if openCount < n:
                 stack.append("(")
 
-                # we append
-                # and then we do our recursive call
-                # we increase our openCount
                 backtack(openCount + 1, closeCount)
-                # we want to pop from our stack
-                # every time we do our recursive call
+                # we want to pop from our stack every time we do our recursive call
                 stack.pop()
 
             if closeCount < openCount:
@@ -69,7 +94,7 @@ class Solution(object):
                 stack.pop()
 
         # we pass in 0 for initial open close count
-        backtack(0,0)
+        backtack(0, 0)
 
         return res
 
