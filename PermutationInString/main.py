@@ -53,72 +53,64 @@ class Solution(object):
         if len(s1) > len(s2):
             return False
 
-        s1Map = [0] * 26
-        s2Map = [0] * 26
+        s1map = [0] * 26
+        s2map = [0] * 26
 
-        # We'll map s1 first
-        # since charCounts will not change
-        # like a sliding window charCount
         for i in range(len(s1)):
-            s1Map[ord(s1[i]) - ord("a")] += 1
-            s2Map[ord(s2[i]) - ord("a")] += 1
+            # map s1
+            s1map[ord(s1[i]) - ord('a')] += 1
+            # map s2
+            s2map[ord(s2[i]) - ord('a')] += 1
 
         matches = 0
 
-        # now we'll traverse both arrays and update matches
+        # we traverse both arrays
+        # update matches if charCounts are equal
         for i in range(26):
-            if s1Map[i] == s2Map[i]:
+            if s1map[i] == s2map[i]:
                 matches += 1
 
-        # now sliding window
+        # now we use a sliding window
+        # and update matches
 
         left = 0
 
+        # we start at len(s1) b/c our window needs to be min len(s1)
         for right in range(len(s1), len(s2)):
             if matches == 26:
                 return True
 
-            # bc we are using the loop above to
-            # iterate through string s2
-            # we'll need to get the charMap index
-            # of the letter our right pointer is on
-            index = ord(s2[right]) - ord("a")
+            index = ord(s2[right]) - ord('a')
 
-            # and we'll need to increment
-            # s2map at the respective index
-            s2Map[index] += 1
+            # increment s2map at the respective index
+            s2map[index] += 1
 
-            # update matches s1Map[index] == s2Map[index]
-            if s2Map[index] == s1Map[index]:
-                matches += 1
-            # if after incrementing s2Map[index]
-            # above, in line 64
-            # our s2Map[index] == s1Map[index] + 1
-            # we've incremented s2
-            # too much
-            elif s2Map[index] == s1Map[index] + 1:
-                # update matches
-                matches -= 1
-
-                # left pointer adjustment
-            index = ord(s2[left]) - ord("a")
-
-            # we decrease s2Map at index
-            # bc we will be shifting our left pointer
-            s2Map[index] -= 1
-
-            if s2Map[index] == s1Map[index]:
-                matches += 1
-
-            # if, by decreasing our our s2Map[index] charCount
-            # in line 90
-            # we are now == to s1Map[index] - 1
-            # we've decreased too much
             # update matches
-            if s2Map[index] == s1Map[index] - 1:
+            if s2map[index] == s1map[index]:
+                matches += 1
+
+            # NOTE s1map charCount should never change!!
+            # if after incrementing s2map[index]
+            # s2map[index] == s1map[index] + 1
+            elif s2map[index] == s1map[index] + 1:
                 matches -= 1
 
-            # update left pointer
+                # shift left pointer
+            index = ord(s2[left]) - ord('a')
+
+            # decrease charCount
+            s2map[index] -= 1
+
+            if s2map[index] == s1map[index]:
+                matches += 1
+
+            # same as above but we put statment here
+            # bc we are reducing a charCount
+            # by shifting left pointer!!
+            elif s2map[index] == s1map[index] - 1:
+                matches -= 1
+
+            # update left
             left += 1
 
         return matches == 26
