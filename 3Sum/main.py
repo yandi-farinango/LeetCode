@@ -55,17 +55,18 @@ class Solution(object):
         nums.sort()
         res = []
 
-        for index, val in enumerate(nums):
+        for idx, val in enumerate(nums):
             # skip duplicates
-            if index > 0 and val == nums[index - 1]:
+            if idx > 0 and val == nums[idx - 1]:
                 continue
 
-            left, right = index + 1, len(nums) - 1
+            left, right = idx + 1, len(nums) - 1
 
             while left < right:
                 # if our sum > 0, we need to decrease, i.e shift right pointer
                 if (val + nums[left] + nums[right]) > 0:
                     right -= 1
+
                 # if we're less than 0, we need to increase, i.e shift left pointer
                 elif (val + nums[left] + nums[right]) < 0:
                     left += 1
@@ -73,8 +74,7 @@ class Solution(object):
                     res.append([val, nums[left], nums[right]])
                     left += 1
 
-                    # we want to ignor duplicates in j and k as well
-                    # so we shift our left pointer on duplicates
+                    # ignore duplicates on left pointer
                     while nums[left] == nums[left - 1] and left < right:
                         left += 1
         return res
