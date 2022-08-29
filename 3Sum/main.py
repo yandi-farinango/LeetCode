@@ -52,29 +52,33 @@ taking the twoSum2 approach
 class Solution(object):
     def threeSum(self, nums):
 
-        nums.sort()
         res = []
 
-        for idx, val in enumerate(nums):
-            # skip duplicates
-            if idx > 0 and val == nums[idx - 1]:
+        nums.sort()
+
+        for index, val in enumerate(nums):
+            if index != 0 and val == nums[index - 1]:
                 continue
 
-            left, right = idx + 1, len(nums) - 1
+            left, right = index + 1, len(nums) - 1
 
             while left < right:
-                # if our sum > 0, we need to decrease, i.e shift right pointer
-                if (val + nums[left] + nums[right]) > 0:
+                # if we're less than 0, we need to shift left UP
+                if (val + nums[left] + nums[right]) < 0:
+                    left += 1
+
+                # if we're greater than 0, we need to shift right down
+                elif (val + nums[left] + nums[right]) > 0:
                     right -= 1
 
-                # if we're less than 0, we need to increase, i.e shift left pointer
-                elif (val + nums[left] + nums[right]) < 0:
-                    left += 1
                 else:
                     res.append([val, nums[left], nums[right]])
+
                     left += 1
 
-                    # ignore duplicates on left pointer
+                    # while our nums[left] == nums[left -1]
+                    # meaning duplicate!!
+                    # keep shifting left pointer
                     while nums[left] == nums[left - 1] and left < right:
                         left += 1
         return res
