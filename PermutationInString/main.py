@@ -49,74 +49,63 @@ So, we'll need to
 
 class Solution(object):
     def checkInclusion(self, s1, s2) -> bool:
-        # edge case
+
         if len(s1) > len(s2):
             return False
 
         s1map = [0] * 26
         s2map = [0] * 26
 
-        for i in range(len(s1)):
-            # map s1
-            s1map[ord(s1[i]) - ord('a')] += 1
-            # map s2
-            s2map[ord(s2[i]) - ord('a')] += 1
+        # iterate through s1 and map charCount
+        for s in range(len(s1)):
+            s1map[ord(s1[s]) - ord('a')] += 1
+            s2map[ord(s2[s]) - ord('a')] += 1
 
+        # matches variable used to count number of matches
+        # will be updated as we traverse s2 and modify charCounts
         matches = 0
 
-        # we traverse both arrays
-        # update matches if charCounts are equal
-        for i in range(26):
+        # update matches
+        for i in range(len(s2map)):
             if s1map[i] == s2map[i]:
                 matches += 1
 
-        # now we use a sliding window
-        # and update matches
-
+        # from here we use a sliding window
         left = 0
 
-        # we start at len(s1) b/c our window needs to be min len(s1)
+        # we start our window at len(s1)
         for right in range(len(s1), len(s2)):
             if matches == 26:
                 return True
 
+            # we need the index
             index = ord(s2[right]) - ord('a')
 
-            # increment s2map at the respective index
+            # increment at respective index
             s2map[index] += 1
 
             # update matches
             if s2map[index] == s1map[index]:
                 matches += 1
-
-            # NOTE s1map charCount should never change!!
-            # if after incrementing s2map[index]
-            # s2map[index] == s1map[index] + 1
             elif s2map[index] == s1map[index] + 1:
                 matches -= 1
 
-                # shift left pointer
+            # take care of left pointer
             index = ord(s2[left]) - ord('a')
 
-            # decrease charCount
             s2map[index] -= 1
 
+            # update matches
             if s2map[index] == s1map[index]:
                 matches += 1
-
-            # same as above but we put statment here
-            # bc we are reducing a charCount
-            # by shifting left pointer!!
             elif s2map[index] == s1map[index] - 1:
                 matches -= 1
 
-            # update left
             left += 1
 
         return matches == 26
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     s1_a = "ab"
     s2_a = "eidbaooo"
