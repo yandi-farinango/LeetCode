@@ -15,52 +15,57 @@ keep answer[i] == 0
 """
 
 """
-We'll need an answer array of len(temperature)
+We want to return an array such that 
+indices show the number of days until a warmer temperature 
 
-We'll be traversing the array 
-and looking to see if the previous days temperature 
-was lower that current temp 
+We can traverse the array and see if the previous days temp 
+was lower than current day 
 
-We can use a stack to look at the previous days temperature 
-If it is less than current, 
-We can add a 1 to our ans array 
-and pop from the top of our stack 
+To look at the previous days temp
+We can use a stack! 
 
-When the current temp
-is not less than previous 
-We will be appending current temp to our stack 
+Our stack will contain the pair [temp, index]
 
-*** If values are equal, we'll also append to our stack 
+Using our stack, 
+WHILE 
+our current temperature is greater than previous days 
+we'll need to add a one AT THE INDEX of the PREVIOUS day
+and we pop previous from our stack 
 
-We will essentially be forming a MONOTONIC DECREASING STACK 
+At the index of the previous day
+i.e stackIdx
 
+we'll place the difference in idxs
+answer[stackIdx] = (idx - stackIdx)
+
+finally we append to our stack
+[temp, idx]
+
+return ans 
 """
 
 class Solution(object):
     def dailyTemperatures(self, temperatures):
 
-        # ans stack of len(temperatures) w/ default values of 0
-        answer = [0] * len(temperatures)
+        ans = [0] * len(temperatures)
 
-        # stack will be containing pair [temp, index]
         stack = []
 
-        # we want to enumerate temperatures
         for idx, temp in enumerate(temperatures):
 
             # while our stack is not empty
-            # and current temp > temp at the top of our stack
+            # and our current temperature is greater than previous days
             while stack and temp > stack[-1][0]:
-                # well pop from the top of our stack
                 stackTemp, stackIdx = stack.pop()
 
-                # at the respective index,
-                # we'll add the difference in idxs
-                answer[stackIdx] = (idx - stackIdx)
+                # at stackIdx
+                # put respective difference
+                ans[stackIdx] = (idx - stackIdx)
 
-            # and we finally want to append [temp, index] to our stack
+            # append
             stack.append([temp, idx])
-        return answer
+
+        return ans
 
 
 if __name__ == '__main__':
