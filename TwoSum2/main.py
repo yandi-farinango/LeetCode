@@ -25,43 +25,54 @@ constant extra space
 
 
 """
-This solution must be solved using only constant extra space 
+We are told that the array is SORTED 
 
-We are also told that the array is already SORTED 
+We are to find two numbers 
+that add to the target 
 
-We can use two pointers
-On opposite ends of numbers array 
+MUST USE constant extra space 
+-meaning- 
+We cant use a hashamp, array, list, etc 
 
-if numbers[left] + numbers[right] < 9 
-well have to shift our left pointer up 
+To solve 
+We can use two pointers 
+initialized on opposite ends of numbers array 
 
-if numbers[left] + numbers[right] > 9 
-well have to shift our right pointer down 
+Because we are told the array is sorted 
 
-else * numbers[left] + numbers[right] == target
+If numbers[left] + numbers[right] > 0
+    We need to shift our right pointer DOWN to a smaller number 
+    
+If numbers[left] + numbers[right] < 0 
+    We need to shift our right pointer UP to a greater number 
 
-so we can return [left + 1, right + 1]
+We are also told there is exactly one solution 
+SO... 
+If none of the above conditions satisfy 
+else:        
+We return [left + 1, right + 1]
 """
 
 
 class Solution(object):
     def twoSum(self, numbers, target):
-        left = 0
 
-        right = len(numbers) - 1
+        # initialize pointers
+        left, right = 0, len(numbers) - 1
 
+        # left will always be less than right
         while left < right:
 
-            # shift left pointer up
-            if numbers[left] + numbers[right] < target:
-                left += 1
-
-            # shift right pointer down
-            elif numbers[left] + numbers[right] > target:
+            # first condition - if > target, we need to shift right DOWN
+            if numbers[left] + numbers[right] > target:
                 right -= 1
 
+            # second condition - if numbers < target, we need to shift left UP
+            elif numbers[left] + numbers[right] < target:
+                left += 1
+
             else:
-                return [left + 1, right + 1]
+                return left + 1, right + 1
 
         return
 
