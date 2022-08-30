@@ -15,34 +15,44 @@ keep answer[i] == 0
 """
 
 """
-We want to return an array such that 
-indices show the number of days until a warmer temperature 
+Given array, temperatures
+    index = day
+    val = temperature 
 
-We can traverse the array and see if the previous days temp 
-was lower than current day 
+We want to return an array, ans 
 
-To look at the previous days temp
-We can use a stack! 
+such that ans[i]
+is the number of days
+until a higher temperature 
 
-Our stack will contain the pair [temp, index]
+len(ans) will be = len(temperatures)
 
-Using our stack, 
-WHILE 
-our current temperature is greater than previous days 
-we'll need to add a one AT THE INDEX of the PREVIOUS day
-and we pop previous from our stack 
+We can start by creating ans[0] * len(temperatures)
 
-At the index of the previous day
-i.e stackIdx
 
-we'll place the difference in idxs
-answer[stackIdx] = (idx - stackIdx)
+ans[i] should be the number of days until a higher temperature
 
-finally we append to our stack
-[temp, idx]
 
-return ans 
+We can use a stack 
+where we will be appending [temp, index]
 
+
+We can traverse temperatures 
+using 
+for index, temp in enumerate(temperatures)
+
+while we have values in our stack, 
+we can compare the previous days temp to our current days temp 
+previous days can be found in stack[-1][0]
+
+while current day temp > stack [-1][0]
+
+we'll keep popping
+stackTemp, stackIndex from our stack 
+until we get to a temp 
+
+and at the respective index 
+ans[index] = current index - stackIndex
 """
 
 class Solution(object):
@@ -50,21 +60,17 @@ class Solution(object):
 
         ans = [0] * len(temperatures)
 
+        # we'll be appending [stackTemp, stackIndex]
         stack = []
 
-        for idx, temp in enumerate(temperatures):
+        for index, temp in enumerate(temperatures):
+            # while stack and our previous day's temp < current temp
+            while stack and stack[-1][0] < temp:
+                stackTemp, stackIndex = stack.pop()
 
-            # while our stack is not empty
-            # and our current temperature is greater than previous days
-            while stack and temp > stack[-1][0]:
-                stackTemp, stackIdx = stack.pop()
+                ans[stackIndex] = index - stackIndex
 
-                # at stackIdx
-                # put respective difference
-                ans[stackIdx] = (idx - stackIdx)
-
-            # append
-            stack.append([temp, idx])
+            stack.append([temp, index])
 
         return ans
 
