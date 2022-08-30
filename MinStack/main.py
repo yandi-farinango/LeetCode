@@ -5,64 +5,58 @@ retrieving the minimum element in constant time.
 """
 
 """
-The tricky thing here is being able to 
-return the min value in our stack 
-in constant time 
+We need to design a stack that supports push, pop, top, 
+and
+retreiving min element in CONSTANT time 
 
-To do this 
-We'll actually use 2 separate stacks 
+To retreive the min element in CONSTANT time 
+We want the min element to be easily accesible 
 
-stack1
-will hold values we've added 
-in the order that we add to our stack 
+i.e at the top of a stack
 
-stack2 will hold the minValue 
-as we continuously add 
-to our stack 
+So... 
 
-adding and popping 
-operating will be done on both stacks 
+We can use two stacks! 
 
-peek operation 
-will be done only on s1
+stack 
+and min stack 
 
-getMin operation 
-will be done on s2
+Min stack will always have the minVal at the top of the stack 
+i.e we'll push min(val, minStack[-1]) to our minStack 
 """
+
 
 class MinStack:
     def __init__(self):
         self.stack = []
         self.minStack = []
 
-
-    def push(self, val: int) -> None:
+    def push(self, val):
+        """
+        :type val: int
+        :rtype: None
+        """
         self.stack.append(val)
+        self.minStack.append(min(val, self.minStack[-1]) if self.minStack else val)
 
-        # for our minStack
-        # since our minStack
-        # is essentially a stack of min vals
-        # we want to push the min val
-
-        # to do this we'll update val
-        # to be min of val and
-        # the value currently at the top of our minStack
-        val = min(val, self.minStack[-1] if self.minStack else val)
-        self.minStack.append(val)
-
-    def pop(self) -> None:
-        # we pop from both stacks
+    def pop(self):
+        """
+        :rtype: None
+        """
         self.stack.pop()
         self.minStack.pop()
 
-    def top(self) -> int:
+    def top(self):
+        """
+        :rtype: int
+        """
         return self.stack[-1]
 
-    def getMin(self) -> int:
+    def getMin(self):
+        """
+        :rtype: int
+        """
         return self.minStack[-1]
-
-
-
 
 
 if __name__ == '__main__':
