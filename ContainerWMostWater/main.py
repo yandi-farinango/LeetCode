@@ -26,111 +26,70 @@ a container can store
 """
 
 """
-We are given a list of heights, y-coordinates
-height[idx] represents x-coordinate 
+We want to return the max volume of a container 
 
-We want a max container
-w a PAIR of max y-coordinates 
-&& max x-coordinate
-    i.e distance between height values, on the given array 
-"""
+array, height, is given where vals are heights 
+and index corresponds to x coordinate 
+
+volume = height * width 
 
 
-"""
-*** BRUTE FORCE ***
+We can use two pointers! 
 
-For BRUTE FORCE, 
-we can do 2 loops
+We'll start by initializing the pointers
+on opposite ends of height array 
 
-while we are looping, 
-we will calculate vol, 
-at each combination
-and continuously update resVol 
-as max(vol, resVol)
-
-Our loop begins at height[L]
-    inner loop starts at height[L+1]
+    * this maximizes our width right off the bat 
+    i.e width = rightPointer - leftPointer 
     
-    loops will traverse in range(len(height))
-    calculate vol as (right - left) * min(height[right], height[left])
-    update resVol
-    return resVol
-"""
 
+We'll calculate container vol as 
+    vol = min(height[left], height[right]) * (right - left)
+        * we use min(height...) b/c
+        our container CANNOT be slanted 
+        
+We'll have a global variable, maxVol, 
+which will be continuously updated w max(vol, maxVol)
 
-"""
-*** Linear Time Sol *** 
-
-we will initialize pointers at OPPOSITE ends of height array 
-By doing so, we've already maximized x-coor, i.e distance aka Width
 
 While left < right
-We will calculate vol same as above 
-and update resVol same as above 
+we'll want to continuously shift the pointer
+at the lower height
 
-THE TRICK HERE, 
-We continuously shift pointer 
-pointing to smaller height 
-
-if both pointers = same height 
-doesnt matter which pointer we shift 
-
-return resVol 
+return maxHeight
 """
 
 
 class Solution(object):
-    # Brute Force SOL
-    # O(n^2)
-    def maxAreaBRUTEFORCE(self, height):
-        # res variable for container volume
-        # will be updated as we go through our loop
-        resVol = 0
-
-        for left in range(len(height)):
-            # our right pointer will always be
-            # 1 position in front of left
-            # and will stop at len(height)
-            for right in range(left + 1, len(height)):
-                # v = W*H
-                # width is right - left
-                # height = min(left, right)
-                vol = (right - left) * min(height[left], height[right])
-
-                resVol = max(vol, resVol)
-
-        return resVol
-
     def maxArea(self, height):
+
+        maxVol = 0
+
         left, right = 0, len(height) - 1
 
-        maxArea = 0
-
         while left < right:
-            # calculate area
-            area = min(height[left], height[right]) * (right - left)
+            vol = min(height[left], height[right]) * (right - left)
 
-            # shift respective pointer
+            # if height[left] is lower we want to shift left pointer
             if height[left] < height[right]:
                 left += 1
+
+            # MUST be elif so that if false, else does not exectue!
+            # https://stackoverflow.com/questions/9271712/difference-between-multiple-ifs-and-elifs
             elif height[right] < height[left]:
                 right -= 1
+            # if they are equal shift any pointer
             else:
                 left += 1
 
-            # update maxArea
-            maxArea = max(area, maxArea)
+            maxVol = max(vol, maxVol)
 
-        return maxArea
-
+        return maxVol
 
 
 if __name__ == '__main__':
     height = [1, 8, 6, 2, 5, 4, 8, 3, 7]
     height2 = [1, 1]
-
-    print(Solution().maxAreaBRUTEFORCE(height))
-    print(Solution().maxAreaBRUTEFORCE(height2))
 
     print(Solution().maxArea(height))
     print(Solution().maxArea(height2))
