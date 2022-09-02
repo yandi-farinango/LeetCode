@@ -18,7 +18,7 @@ top pointer = 0
 
 bottom pointer = len(matrix) - 1
 
-Here we can do binary serach 
+Here we can do binary search 
 while left < right:
     we calculate mid
 
