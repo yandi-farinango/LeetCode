@@ -81,21 +81,20 @@ we return len of stack
 class Solution(object):
     def carFleet(self, target, position, speed):
 
-        # creating an array of [position, speed] pairs
-        pair = [[pos, speed] for pos, speed in zip(position, speed)]
-
         stack = []
 
-        # reverse sorted pair
-        for pos, speed in sorted(pair)[::-1]:
+        pos = [[pos, speed] for pos, speed in zip(position, speed)]
+        pos.sort()
 
-            # append times
+        for pos, speed in pos[::-1]:
+
+            # calculate expected arrival time
             stack.append((target - pos) / speed)
 
-            # if current car i.e stack[-1]
-            # reaches destination in less time
-            # than car in front i.e stack[-2]
-            # pop
+            # if current car                        i.e stack[-1]
+            # arrives earlier than previous car     i.e stack[-2]
+            # stack[-1] < stack[-2]
+            # we pop from our stack
             if len(stack) >= 2 and stack[-1] <= stack[-2]:
                 stack.pop()
 
@@ -108,4 +107,11 @@ if __name__ == '__main__':
     speed = [2, 4, 1, 1, 3]
     target = 12
 
+    pos2 = [6, 8]
+    speed2 = [3,2]
+    target2 = 10
+
+
+
     print(Solution().carFleet(target, position, speed))
+    print(Solution().carFleet(target2, pos2, speed2))
