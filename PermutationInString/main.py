@@ -50,19 +50,20 @@ So, we'll need to
 class Solution(object):
     def checkInclusion(self, s1, s2) -> bool:
 
+        # edge case
         if len(s1) > len(s2):
             return False
 
         s1map = [0] * 26
         s2map = [0] * 26
 
-        # iterate through s1 and map charCount
-        for s in range(len(s1)):
-            s1map[ord(s1[s]) - ord('a')] += 1
-            s2map[ord(s2[s]) - ord('a')] += 1
+        # mapping s1 chars
+        for i in range(len(s1)):
+            s1map[ord(s1[i]) - ord('a')] += 1
 
-        # matches variable used to count number of matches
-        # will be updated as we traverse s2 and modify charCounts
+            # we can also map some s2
+            s2map[ord(s2[i]) - ord('a')] += 1
+
         matches = 0
 
         # update matches
@@ -70,37 +71,38 @@ class Solution(object):
             if s1map[i] == s2map[i]:
                 matches += 1
 
-        # from here we use a sliding window
+        # sliding window
         left = 0
 
-        # we start our window at len(s1)
         for right in range(len(s1), len(s2)):
             if matches == 26:
                 return True
 
-            # we need the index
+                # we need the index
             index = ord(s2[right]) - ord('a')
 
-            # increment at respective index
+            # increment the count at index
             s2map[index] += 1
 
-            # update matches
+            # update matches after increment
             if s2map[index] == s1map[index]:
                 matches += 1
             elif s2map[index] == s1map[index] + 1:
                 matches -= 1
 
-            # take care of left pointer
-            index = ord(s2[left]) - ord('a')
+            # left pointer
+            left_index = ord(s2[left]) - ord('a')
 
-            s2map[index] -= 1
+            # decrement count at the index
+            s2map[left_index] -= 1
 
-            # update matches
-            if s2map[index] == s1map[index]:
+            # update matches after decrement
+            if s2map[left_index] == s1map[left_index]:
                 matches += 1
-            elif s2map[index] == s1map[index] - 1:
+            elif s2map[left_index] == s1map[left_index] - 1:
                 matches -= 1
 
+            # shift left pointer
             left += 1
 
         return matches == 26
