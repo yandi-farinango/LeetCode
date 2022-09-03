@@ -45,38 +45,27 @@ class Solution(object):
     def characterReplacement(self, s: str, k: int) -> int:
 
         charCount = {}
-        res = 0
 
-        leftPointer = 0
+        maxLen = 0
 
-        # use rightPointer to iterate
-        for rightPointer in range(len(s)):
-            # increment charCount as we build our sliding window
-            charCount[s[rightPointer]] = 1 + charCount.get(s[rightPointer], 0)
+        left = 0
 
-            """            
-            *** COMMON MISTAKE ***
-            
-            we don't need to increment right pointer here
-            as it is being incremented in our loop above
-            
-            while (((right - left + 1) - max(charMap.values())) <= k):
-                right += 1
-                
-            """
+        for right in range(len(s)):
+            charCount[s[right]] = 1 + charCount.get(s[right], 0)
 
-            # shift left pointer when chars to switch > k
-            # decrement respective charCount
-            while ((rightPointer - leftPointer + 1) - max(charCount.values())) > k:
-                charCount[s[leftPointer]] -= 1
-                leftPointer += 1
+            # while numbers to replace > k
+            # we want to shift our left pointer
+            while ((right - left + 1) - max(charCount.values())) > k:
+                charCount[s[left]] -= 1
+                left += 1
 
-            res = max(res, rightPointer - leftPointer + 1)
+            maxLen = max(right - left + 1, maxLen)
 
-        return res
+        return maxLen
 
 
-# Press the green button in the gutter to run the script.
+
+    # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     k1 = 1
     s1 = "AABABBA"
