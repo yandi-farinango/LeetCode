@@ -52,56 +52,44 @@ return False
 class Solution(object):
     def searchMatrix(self, matrix, target):
 
-        # our first set of pointers will traverse rows
-        # we'll initialize our left pointer at 0
-        # and our right pointer will traverse matrix rows
-        # matrix rows = len(matrix)
-        top, bottom = 0, len(matrix) - 1
+        row, col = len(matrix), len(matrix[0])
+
+        # top -> bottom binary search
+        top = 0
+        bottom = row -1
 
         while top < bottom:
-            mid = (top + bottom) // 2
+            mid = (bottom + top) // 2
 
-            # if our target is greater than last number in row mid
-            # well want to shift our top pointer UP
+            # if target is less than mid, shift top UP
             if target > matrix[mid][-1]:
                 top = mid + 1
-
-            # if our target is less than the FIRST number in row mid
-            # we want to shift our bottom pointer DOWN
             elif target < matrix[mid][0]:
                 bottom = mid - 1
-
             else:
                 break
 
-        # When we break,
-        # our last top and bottom are cached
-
-        if not (top <= bottom):
+        if not(top <= bottom):
             return False
 
-        # we want to get the row where our target may lie
         row = (top + bottom) // 2
 
-        # this time we'll set our pointer to traverse through the cols
-        # cols can be described by len(matrix[0])
-        left, right = 0, len(matrix[0]) - 1
+        # right -> left binary search
+        left = 0
+        right = col - 1
 
         while left < right:
-            midpoint = (left + right) // 2
+            mid = (right + left) // 2
 
-            # if our target is greater than our midpoint
-            # shift left UP
-            if target > matrix[row][midpoint]:
-                left = midpoint + 1
+            if target < matrix[row][mid]:
+                right = mid - 1
 
-            # our target is less than our midpoint
-            # we want to shift our left pointer DOWN
-            elif target < matrix[row][midpoint]:
-                right = midpoint - 1
+            elif target > matrix[row][mid]:
+                left = mid + 1
 
             else:
                 return True
+
         return False
 
 
