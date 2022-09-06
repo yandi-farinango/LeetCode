@@ -57,17 +57,16 @@ class Solution(object):
         s1map = [0] * 26
         s2map = [0] * 26
 
-        # mapping s1 chars
+        # map s1
         for i in range(len(s1)):
             s1map[ord(s1[i]) - ord('a')] += 1
-
-            # we can also map some s2
             s2map[ord(s2[i]) - ord('a')] += 1
 
+        # matches
         matches = 0
 
-        # update matches
-        for i in range(len(s2map)):
+        # update match count
+        for i in range(len(s1map)):
             if s1map[i] == s2map[i]:
                 matches += 1
 
@@ -78,13 +77,15 @@ class Solution(object):
             if matches == 26:
                 return True
 
-                # we need the index
-            index = ord(s2[right]) - ord('a')
+            # we'll need to adjust our charCount
+            # as our pointers are shifted
 
-            # increment the count at index
+            # get index
+            index = ord(s2[right]) - ord('a')
+            # increment at respective index
             s2map[index] += 1
 
-            # update matches after increment
+            # update matches
             if s2map[index] == s1map[index]:
                 matches += 1
             elif s2map[index] == s1map[index] + 1:
@@ -92,11 +93,9 @@ class Solution(object):
 
             # left pointer
             left_index = ord(s2[left]) - ord('a')
-
-            # decrement count at the index
             s2map[left_index] -= 1
 
-            # update matches after decrement
+            # update matches
             if s2map[left_index] == s1map[left_index]:
                 matches += 1
             elif s2map[left_index] == s1map[left_index] - 1:
