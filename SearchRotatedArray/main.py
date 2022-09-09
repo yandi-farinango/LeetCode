@@ -115,5 +115,7 @@ if __name__ == '__main__':
     target2 = 3
     target3 = 0
 
-    print(Solution.search(nums, target))
+    print(Solution().search(nums, target))
+    print(Solution().search(nums, target2))
 
+    print(Solution().search(nums2, target3))
