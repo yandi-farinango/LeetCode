@@ -58,28 +58,26 @@ class Solution(object):
     def evalRPN(self, tokens):
         stack = []
 
-        for char in tokens:
-            if char == "+":
+        for token in tokens:
+
+            if token == "+":
                 a, b = stack.pop(), stack.pop()
                 stack.append(a + b)
 
-            # order matters for subtraction
-            elif char == "-":
+            elif token == "-":
                 a, b = stack.pop(), stack.pop()
                 stack.append(b - a)
 
-            elif char == "*":
+            elif token == "*":
                 a, b = stack.pop(), stack.pop()
-                stack.append(a * b)
+                stack.append(b * a)
 
-            # order matters for division
-            elif char == "/":
+            elif token == "/":
                 a, b = stack.pop(), stack.pop()
                 stack.append(int(b / a))
 
-            # append numbers
             else:
-                stack.append(int(char))
+                stack.append(int(token))
 
         return stack[0]
 
