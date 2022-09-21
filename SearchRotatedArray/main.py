@@ -64,31 +64,33 @@ return -1
 
 class Solution(object):
     def search(self, nums, target):
-
         left, right = 0, len(nums) - 1
 
         while left <= right:
             mid = (left + right) // 2
 
+            # return mid
             if target == nums[mid]:
                 return mid
 
-            # we're in the LEFT portion
-            if nums[left] <= nums[mid]:
-                # search RIGHT
-                if target > nums[mid] or target < nums[left]:
-                    left = mid + 1
-                # search LEFT
-                else:
-                    right = mid -1
+            # check which section we are in
 
-            # we're in the RIGHT portion
-            else:
-                # search LEFT
-                if target < nums[mid] or target > nums[right]:
-                    right = mid - 1
-                # search RIGHT
+            # left portion
+            if nums[left] <= nums[mid]:
+                if target > nums[mid] or target < nums[left]:
+                    # search left
+                    left = mid + 1
                 else:
+                    # search right
+                    right = mid - 1
+
+                    # right portion
+            else:
+                if target < nums[mid] or target > nums[right]:
+                    # search right
+                    right = mid - 1
+                else:
+                    # search left
                     left = mid + 1
 
         return -1
