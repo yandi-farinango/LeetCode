@@ -101,6 +101,30 @@ class Solution(object):
         return len(stack)
 
 
+""""
+Another implementation 
+"""
+
+
+class Solution2(object):
+    def carFleet(self, target, position, speed):
+        zipped = [[pos, speed] for pos, speed in zip(position, speed)]
+        zipped.sort()
+
+
+        stack = []
+
+        for car in zipped[::-1]:
+            est = (target - car[0]) / car[1]
+
+            while stack and stack[-1] >= est:
+                stack.pop()
+
+            stack.append(est)
+
+        return len(stack)
+
+
 if __name__ == '__main__':
 
     position = [10, 8, 0, 5, 3]
@@ -115,3 +139,6 @@ if __name__ == '__main__':
 
     print(Solution().carFleet(target, position, speed))
     print(Solution().carFleet(target2, pos2, speed2))
+
+    print(Solution2().carFleet(target, position, speed))
+    print(Solution2().carFleet(target2, pos2, speed2))
