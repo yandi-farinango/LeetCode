@@ -88,7 +88,7 @@ class Solution(object):
             minVal = min(minVal, nums[mid])
 
             # LEFT portion
-            if nums[left] < nums[mid]:
+            if nums[left] <= nums[mid]:
                 # If we are in the LEFT portion,
                 # we want to search RIGHT
                 # bc we know that the RIGHT portion contains smaller vals
