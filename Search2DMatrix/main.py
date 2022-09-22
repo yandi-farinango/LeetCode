@@ -133,7 +133,7 @@ class Solution2(object):
                     else:
                         return True
 
-                return False
+        return False
 
 
 
