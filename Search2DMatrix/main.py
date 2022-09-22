@@ -58,7 +58,7 @@ class Solution(object):
         top = 0
         bottom = row -1
 
-        while top < bottom:
+        while top <= bottom:
             mid = (bottom + top) // 2
 
             # if target is less than mid, shift top UP
@@ -78,7 +78,7 @@ class Solution(object):
         left = 0
         right = col - 1
 
-        while left < right:
+        while left <= right:
             mid = (right + left) // 2
 
             if target < matrix[row][mid]:
@@ -93,9 +93,60 @@ class Solution(object):
         return False
 
 
+class Solution2(object):
+    def searchMatrix(self, matrix, target):
+        row, col = len(matrix), len(matrix[0])
+
+        top, bottom = 0, row - 1
+
+        while top <= bottom:
+            mid = (top + bottom) // 2
+
+            # if target > than last element in mid row,
+            if target > matrix[mid][-1]:
+                # shift our top pointer UP
+                top = mid + 1
+
+            # if target < the first element in mid row
+            elif target < matrix[mid][0]:
+                # shift bottom pointer UP
+                bottom = mid - 1
+
+                # if target not > matrix[mid][-1]
+                # and target not < mid[mid][0]
+                # our target may lie within this row!!
+            else:
+                left, right = 0, col - 1
+
+                while left <= right:
+                    mid_col = (left + right) // 2
+
+                    # if target > mid_col
+                    if target > matrix[mid][mid_col]:
+                        # shift left UP
+                        left = mid_col + 1
+
+                    # if target < mid_col
+                    elif target < matrix[mid][mid_col]:
+                        # shift Right DOWN
+                        right = mid_col - 1
+                    else:
+                        return True
+
+                return False
+
+
+
 if __name__ == '__main__':
 
     matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60],[61,65,66,67]]
     target = 30
 
+    matrix2 = [[1]]
+    target2 = 1
+
     print(Solution().searchMatrix(matrix, target))
+    print(Solution().searchMatrix(matrix2, target2))
+
+    print(Solution2().searchMatrix(matrix, target))
+    print(Solution2().searchMatrix(matrix2, target2))
