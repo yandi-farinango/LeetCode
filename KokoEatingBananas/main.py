@@ -127,6 +127,31 @@ class Solution(object):
 
         return ans
 
+class Solution2(object):
+    def minEatingSpeed(self, piles, h):
+        """
+        LeetCode has issues w math.ceil
+        implemented solution w/o math.ceil
+
+        :param piles:
+        :param h:
+        :return:
+        """
+        left, right = 1, max(piles)
+        ans = 0
+
+        while left <= right:
+            k = (left + right) // 2
+
+            hours = 0
+            for pile in piles:
+                hours += ((pile - 1) // k) + 1
+            if hours <= h:
+                ans = k
+                right = k - 1
+            else:
+                left = k + 1
+        return ans
 
 if __name__ == '__main__':
     piles = [3, 6, 7, 11]
@@ -141,3 +166,7 @@ if __name__ == '__main__':
     print(Solution().minEatingSpeed(piles, h))
     print(Solution().minEatingSpeed(piles2, h2))
     print(Solution().minEatingSpeed(piles3, h3))
+
+    print(Solution2().minEatingSpeed(piles, h))
+    print(Solution2().minEatingSpeed(piles2, h2))
+    print(Solution2().minEatingSpeed(piles3, h3))
