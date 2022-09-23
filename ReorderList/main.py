@@ -45,17 +45,15 @@ from PrintLinkedList import *
 
 class Solution(object):
     def reorderList(self, head):
-        # initialize pointers
-        slow, fast = head, head.next
+        # initialize pointers to find middle
+        slow, fast = head.next, head.next.next
 
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
 
-        # our right portion should now be in slow.next
+        # section off portions
         right = slow.next
-
-        # split halves
         slow.next = None
 
         # reverse right portion
@@ -63,8 +61,7 @@ class Solution(object):
         while right:
             temp = right.next
             right.next = prev
-
-            # update pointers
+            # adjust pointers
             prev = right
             right = temp
 
@@ -76,8 +73,7 @@ class Solution(object):
 
             left.next = right
             right.next = temp1
-
-            # shift pointers
+            # adjust pointers
             left = temp1
             right = temp2
 
