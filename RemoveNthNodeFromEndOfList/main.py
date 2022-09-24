@@ -1,6 +1,23 @@
 from LinkedList import *
 from PrintLinkedList import *
 
+"""
+Given the head of a linked list 
+Remove the nth node 
+from the end of the list 
+Return its head 
+"""
+
+"""
+We can use two pointers, 
+fast and slow
+
+If we maintain n distance between the pointers, 
+by the time the fast pointer reaches the end of the linked list 
+the slow pointer should be on the nth node from the end 
+
+We can remove that node 
+"""
 
 class Solution(object):
     def removeNthFromEnd(self, head, n):
