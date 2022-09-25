@@ -84,7 +84,7 @@ class Solution(object):
                     # search right
                     right = mid - 1
 
-                    # right portion
+            # right portion
             else:
                 if target < nums[mid] or target > nums[right]:
                     # search right
@@ -99,12 +99,16 @@ class Solution(object):
 if __name__ == '__main__':
     nums = [4, 5, 6, 7, 0, 1, 2]
     nums2 = [1]
+    nums3 = [5, 1, 3]
 
     target = 0
     target2 = 3
     target3 = 0
+    target4 = 2
 
     print(Solution().search(nums, target))
     print(Solution().search(nums, target2))
 
     print(Solution().search(nums2, target3))
+
+    print(Solution().search(nums3, target4))
