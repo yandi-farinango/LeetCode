@@ -41,41 +41,41 @@ we can proceed to reverse the right portion
 """
 
 from LinkedList import *
-from PrintLinkedList import *
 
 class Solution(object):
     def reorderList(self, head):
-        # initialize pointers to find middle
         slow, fast = head, head.next
 
+        # get pointers in the correct position
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
 
-        # section off portions
-        right = slow.next
+        # split portions
+        second_half = slow.next
         slow.next = None
 
-        # reverse right portion
+        # reverse second_half
         prev = None
-        while right:
-            temp = right.next
-            right.next = prev
-            # adjust pointers
-            prev = right
-            right = temp
 
-        # merge
-        left, right = head, prev
+        while second_half:
+            temp = second_half.next
+            second_half.next = prev
+            prev = second_half
+            second_half = temp
 
-        while right:
-            temp1, temp2 = left.next, right.next
+        # assign variables to the respective portions
+        first_half, second_half = head, prev
 
-            left.next = right
-            right.next = temp1
-            # adjust pointers
-            left = temp1
-            right = temp2
+        # merge the two lists
+        while second_half:
+            temp1, temp2 = first_half.next, second_half.next
+
+            first_half.next = second_half
+            second_half.next = temp1
+
+            first_half = temp1
+            second_half = temp2
 
         return head.next
 
@@ -94,8 +94,9 @@ if __name__ == '__main__':
     l3.next = l4
     l4.next = l5
 
-    printLinkedList(ll)
+    printLinkedListHEAD(ll)
 
     Solution().reorderList(ll.head)
-    print("New List: ")
-    printLinkedList(ll)
+
+    print('--Reordered--')
+    printLinkedListHEAD(ll)
