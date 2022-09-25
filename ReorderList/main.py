@@ -46,7 +46,7 @@ from PrintLinkedList import *
 class Solution(object):
     def reorderList(self, head):
         # initialize pointers to find middle
-        slow, fast = head.next, head.next.next
+        slow, fast = head, head.next
 
         while fast and fast.next:
             slow = slow.next
