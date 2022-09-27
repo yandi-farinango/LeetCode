@@ -21,23 +21,24 @@ We can remove that node
 
 class Solution(object):
     def removeNthFromEnd(self, head, n):
-        # initialize dummy node
+        # initialize pointers
         dummy = ListNode(0, head)
-        slow = dummy
 
         fast = head
+        slow = dummy
 
-        # get fast in the correct position
-        while n > 0 and fast:
+        # get fast pointer in the correct position
+        i = 0
+        while i < n:
             fast = fast.next
-            n -= 1
+            i += 1
 
         # shift pointers
         while fast:
             slow = slow.next
             fast = fast.next
 
-        # delete the node
+            # remove node
         slow.next = slow.next.next
 
         return dummy.next
