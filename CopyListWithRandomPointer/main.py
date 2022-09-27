@@ -45,37 +45,36 @@ from LinkedList import *
 
 class Solution(object):
     def copyRandomList(self, head):
+        # initialize hashmap that will be used to map oldnode:newnode
+        nodeMap = {None: None}
 
-        # initializing hashmap
-        # map null to null on initialization
-        oldToCopy = {None:None}
-
-        # first pass
+        # first pass - cloning the nodes
+        #            - mapping oldNodes:copyNodes
         current = head
 
         while current:
-            # copying node
+            # create a new node
+            # that is a copy of the current node
             copy = Node(current.val)
 
-            # mapping old node to our copy
-            oldToCopy[current] = copy
-
+            # map the current node:copy node
+            nodeMap[current] = copy
             current = current.next
 
-        # second pass
+            # second pass -
         current = head
         while current:
-            # get our copy
-            copy = oldToCopy[current]
+            # returns copy node
+            # that is mapped at nodeMap[current]
+            copy = nodeMap[current]
 
-            # connecting nodes
-            copy.next = oldToCopy[current.next]
-            copy.random = oldToCopy[current.random]
-
+            # set copy.next
+            # to the copied     returned copy of current.next node  example above!
+            copy.next = nodeMap[current.next]
+            copy.random = nodeMap[current.random]
             current = current.next
 
-        return oldToCopy[head]
-
+        return nodeMap[head]
 
 if __name__ == '__main__':
     ll = LinkedList()
