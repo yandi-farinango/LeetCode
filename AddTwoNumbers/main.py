@@ -28,43 +28,43 @@ following the same format
 """
 
 """
-We can actually solve this pretty straightforward 
+We can actually solve this problem
+taking an elementary school approach 
 
-Bc we are given the numbers in reverse,
-we just add like we normally would in written math 
-           1 1   
-    Ex:     123
-        +   789
-        --------
-           9 1 2 
+    Ex: 123
+      + 456
+      ------
+      
+In solving the expression above, 
+we're going to start adding at the ones place 
 
-When we add numbers as shown in the example above, 
-we have to start adding from the ones place 
+the lists are already given to us starting at the ones! 
 
-Our linked lists are given to us 
-in reverse order
-meaning, we can start adding from the heads of both lists!
+the thing we'll have to take note of is what happens when 
+we add values > 10 
+and we have 
 
+we can get the carried tens-place value by //10
+and we can get the ones-place value by % 10 
 
+We'll use initialize a dummy node 
+and we'll append our vals to dummy.next 
+
+return dummy.next 
 """
 
 
 class Solution(object):
     def addTwoNumbers(self, list1, list2):
-
-        # create a dummy node
-        # we will be adding to dummy; returning dummy.next
-        dummy = Node()
+        # intialize dummy
+        dummy = ListNode()
 
         # pointer
         current = dummy
 
-        # initialize pointer at 0
+        # initialize carry at 0
         carry = 0
 
-        # we do while list1 or list1 OR CARRY
-        # bc carry might be 1 if we add two numbers and sum > 10
-        # Ex: 5+6
         while list1 or list2 or carry:
             v1 = list1.val if list1 else 0
             v2 = list2.val if list2 else 0
@@ -72,14 +72,14 @@ class Solution(object):
             # add
             val = v1 + v2 + carry
 
-            # set carry to val's tens place
-            carry = val //10
-            # set val to val's ones place
+            # get carried and val
+            carry = val // 10
             val = val % 10
 
-            current.next = Node(val)
+            # append
+            current.next = ListNode(val)
 
-            # update pointers
+            # shift pointers
             current = current.next
             list1 = list1.next if list1 else None
             list2 = list2.next if list2 else None
