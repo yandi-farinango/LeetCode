@@ -52,42 +52,44 @@ return False
 class Solution(object):
     def searchMatrix(self, matrix, target):
 
-        row, col = len(matrix), len(matrix[0])
+        rows, cols = len(matrix), len(matrix[0])
 
-        # top -> bottom binary search
-        top = 0
-        bottom = row -1
+        # We start seraching through rows
+        top, bottom = 0, rows - 1
 
         while top <= bottom:
-            mid = (bottom + top) // 2
+            mid = (top + bottom) // 2
 
-            # if target is less than mid, shift top UP
+            # if our target > last val in the row,
+            # we want to search UP
             if target > matrix[mid][-1]:
                 top = mid + 1
+            # if our target < first val in the row
+            # we want to search DOWN
             elif target < matrix[mid][0]:
                 bottom = mid - 1
+                # we might be in the right row
             else:
                 break
 
-        if not(top <= bottom):
-            return False
+                # get the right row
+        mid_row = (top + bottom) // 2
 
-        row = (top + bottom) // 2
-
-        # right -> left binary search
-        left = 0
-        right = col - 1
+        # Search through the row
+        left, right = 0, cols - 1
 
         while left <= right:
-            mid = (right + left) // 2
+            mid_col = (left + right) // 2
 
-            if target < matrix[row][mid]:
-                right = mid - 1
+            # if target > mid_col shift left UP
+            if target > matrix[mid_row][mid_col]:
+                left = mid_col + 1
 
-            elif target > matrix[row][mid]:
-                left = mid + 1
+            # if target < mid_col shift right DOWN
+            elif target < matrix[mid_row][mid_col]:
+                right = mid_col - 1
 
-            else:
+            elif target == matrix[mid_row][mid_col]:
                 return True
 
         return False
