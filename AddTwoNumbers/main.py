@@ -32,22 +32,39 @@ We can actually solve this pretty straightforward
 
 Bc we are given the numbers in reverse,
 we just add like we normally would in written math 
-            1 1   
+           1 1   
     Ex:     123
         +   789
         --------
            9 1 2 
-        
+
+When we add numbers as shown in the example above, 
+we have to start adding from the ones place 
+
+Our linked lists are given to us 
+in reverse order
+meaning, we can start adding from the heads of both lists!
+
+
 """
 
 
 class Solution(object):
     def addTwoNumbers(self, list1, list2):
+
+        # create a dummy node
+        # we will be adding to dummy; returning dummy.next
         dummy = Node()
+
+        # pointer
         current = dummy
 
+        # initialize pointer at 0
         carry = 0
 
+        # we do while list1 or list1 OR CARRY
+        # bc carry might be 1 if we add two numbers and sum > 10
+        # Ex: 5+6
         while list1 or list2 or carry:
             v1 = list1.val if list1 else 0
             v2 = list2.val if list2 else 0
@@ -55,9 +72,9 @@ class Solution(object):
             # add
             val = v1 + v2 + carry
 
-            # get the carry digit
+            # set carry to val's tens place
             carry = val //10
-            # get the remainder digit
+            # set val to val's ones place
             val = val % 10
 
             current.next = Node(val)
