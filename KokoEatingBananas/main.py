@@ -132,13 +132,10 @@ class Solution2(object):
         """
         LeetCode has issues w math.ceil
         implemented solution w/o math.ceil
-
-        :param piles:
-        :param h:
-        :return:
         """
-        left, right = 1, max(piles)
-        ans = 0
+
+        left, right = 0, max(piles)
+        ans = right
 
         while left <= right:
             k = (left + right) // 2
@@ -147,9 +144,9 @@ class Solution2(object):
             for pile in piles:
                 hours += ((pile - 1) // k) + 1
             if hours <= h:
-                ans = k
+                ans = min(ans, k)
                 right = k - 1
-            else:
+            elif hours > h:
                 left = k + 1
         return ans
 
