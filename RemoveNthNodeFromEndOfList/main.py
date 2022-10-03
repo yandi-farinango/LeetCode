@@ -9,25 +9,42 @@ Return its head
 """
 
 """
-We can use two pointers, 
-fast and slow
+We can do this using two pointers 
+slow, fast 
 
-If we maintain n distance between the pointers, 
-by the time the fast pointer reaches the end of the linked list 
-the slow pointer should be on the nth node from the end 
+We want to get the pointers n nodes apart 
+and then shift them together 
+when the fast pointer reaches the end, 
+the slow pointer should be at the nth node from the end 
 
-We can remove that node 
+We can use a dummy node 
+that will be one node behind the slow pointer 
+
+when the slow pointer is at the nth node from the end 
+We can delete the nth node 
+by setting the dummy node = next.next 
+
+
+To get the pointers in the respective position,
+we'll first need to move the fast pointer by itself 
+
+Once the fast pointer is in position 
+we can shift all pointers 
+
+To delete nth node 
+we set dummy.next = dummy.next.next 
+
 """
 
 class Solution(object):
     def removeNthFromEnd(self, head, n):
-        # initialize pointers
+        # intialize nodes
+        slow, fast = head, head
+
         dummy = ListNode(0, head)
+        current = dummy
 
-        fast = head
-        slow = dummy
-
-        # get fast pointer in the correct position
+        # get Fast in position
         i = 0
         while i < n:
             fast = fast.next
@@ -35,11 +52,13 @@ class Solution(object):
 
         # shift pointers
         while fast:
-            slow = slow.next
             fast = fast.next
+            slow = slow.next
+            current = current.next
 
-            # remove node
-        slow.next = slow.next.next
+        # DELETE
+        # skip over slow pointer
+        current.next = current.next.next
 
         return dummy.next
 
