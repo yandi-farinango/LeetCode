@@ -16,47 +16,55 @@ and using constant extra space
 
 """
 Although we are given an array, 
+to solve this problem, 
+it helps if we think of our array as a linked list 
 
-We can think of this as a linked list 
+AND if we use our array as a linked list, 
+we can then use Floyds slow, fast algo 
+to find the duplciate val 
 
-where the val in array[i]
-is a reference to the ith node
+The given array 
+may be thought of as a linked list 
+where the indices 
+represent the node 
+which our .next would be pointing to 
+in a linked list 
 
-    Ex: [1,3,4,2,2]
-        val at array[0]
-        is pointing to val at position array[1]
-        
-        val at array[1]
-        is pointing to val at position array[3]
-        
-If we connect all the pointers, 
-we'll see that our linked list actually has a cycle! 
+    Ex: [1, 3, 4, 2, 2]
+    
+        at array[0]: val = 1    meaning pointer connects to array[1]
+        at array[1]: val = 3    meaning pointer connects to array[3]
+        at array[2]: val = 4    meaning pointer connects to array[4]
 
-The duplicate val 
-will be the node
-which has multiple nodes pointing towards it 
+If we consider our array to be a form of a linked list 
+we can then use Floyds fast, slow pointer 
+to find the duplicate val 
 
-We'll apply Floyd's algo 
-to determine which is our duplicate val
+We will find the duplicate val by intializing 
+slow, fast = 0, 0
 
-For Floyd's algo, 
-we need two pointers 
-slow, fast = head, head 
+we'll shift our pointers
+slow = nums[slow]
+fast = nums[nums[fast]]
 
-We'll shift
-slow = slow.next 
-fast = fast.next.next 
+At the point where our fast == slow 
+we want to break 
 
-We want to get the first position
-where our pointers will intersect at 
+This is our first intersection 
 
-When we've found the first intersection, 
-We want to introduce another slow pointer 
-slow_2 = head
+Once we've found our first intersection point 
+we'll want to introduce 
+slow_2 = 0
 
-We'll continue to shift all our pointers 
-slow = slow.next 
-slow_2 = slow_2.next 
+We'll move our slow pointers 
+slow = nums[slow]
+slow_2 = nums[slow_2]
+
+At the point where slow == slow_2 
+We've found our 2nd intersection 
+
+THIS IS OUR DUPLCIATE! 
+We can return either slow or slow_2 
 
 """
 
