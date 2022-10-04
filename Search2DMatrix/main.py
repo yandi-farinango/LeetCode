@@ -8,88 +8,88 @@ integers are sorted top -> bottom
 """
 
 """
-We can solve this efficiently using binary search 
-The tricky part here coding the matrix traversal 
+We can solve this using a binary search 
 
-We'll start by looking at rows
-we initialize our pointers on opposite ends 
+when working w/ matrix 
+rows = len(matrix)
+cols = len(matrix[0])
 
-top pointer = 0 
+We'll first try to identify which row our target may potentailly lie 
 
-bottom pointer = len(matrix) - 1
+    We'll set up our binary search to look through the rows 
+    from top -> bottom 
 
-Here we can do binary search 
-while left < right:
-    we calculate mid
+    if our target is greater than the LAST value in the row
+    search UP for larger numbers 
 
-    if our target < mid; we shift our bottom pointer DOWN 
-    if our target > mid; we shift our top pointer UP
+    elif our matrix is less than the FIRST value in the row
+    search DOWN for a smaller numbers 
 
-    ELSE WE BREAK!
+    else we've found a potential row!
 
-    We do a check in case we broke on the number not existing...
-    if not(top <= bottom):
-    return False 
 
-    When we break, we know have the row, col where our Target value may lie 
-
-    We identify row as (top + bottom)//2
-
-    Now that we've identified this row, 
-    we can set two more pointers
-    left, right 
-
-    left initialized = 0
-    # right initialized at matrix[0] b.c we will be traversing through the COL 
-    right initialized len(matrix[0]) - 1
-
-    we do the same binary search 
-
-    return true 
+Then we'll search through the cols of the potential row for target 
+    if target > matrix[potential_row][mid_col]
+    shift UP
+    
+    elif target < matrix[potential_row][mid_col]
+    shift DOWN 
+    
+    else:
+        We've found TARGET! Return True 
+        
+        
 return False 
 """
 
 class Solution(object):
     def searchMatrix(self, matrix, target):
-
         rows, cols = len(matrix), len(matrix[0])
 
-        # We start seraching through rows
+        """
+        Binary Search through ROWS
+        """
         top, bottom = 0, rows - 1
 
         while top <= bottom:
-            mid = (top + bottom) // 2
+            mid_row = (top + bottom) // 2
 
-            # if our target > last val in the row,
-            # we want to search UP
-            if target > matrix[mid][-1]:
-                top = mid + 1
-            # if our target < first val in the row
-            # we want to search DOWN
-            elif target < matrix[mid][0]:
-                bottom = mid - 1
-                # we might be in the right row
+            # if our matrix is greater than the LAST value in the row
+            if target > matrix[mid_row][-1]:
+                # search UP for larger numbers
+                top = mid_row + 1
+
+            # if our matrix is less than the FIRST value in the row
+            elif target < matrix[mid_row][0]:
+                # search DOWN for a smaller numbers
+                bottom = mid_row - 1
+
+            # we've found a potential row!
             else:
                 break
 
-                # get the right row
-        mid_row = (top + bottom) // 2
+                # get the potential row
+        potential_row = (top + bottom) // 2
 
-        # Search through the row
+        """
+        Binary Search through COLS
+        """
+
         left, right = 0, cols - 1
 
         while left <= right:
             mid_col = (left + right) // 2
 
-            # if target > mid_col shift left UP
-            if target > matrix[mid_row][mid_col]:
+            # if target > matrix[potential_row][mid_col]
+            if target > matrix[potential_row][mid_col]:
+                # shift UP
                 left = mid_col + 1
 
-            # if target < mid_col shift right DOWN
-            elif target < matrix[mid_row][mid_col]:
+            # if target < matrix[potential_row][mid_col]
+            elif target < matrix[potential_row][mid_col]:
+                # shift DOWN
                 right = mid_col - 1
-
-            elif target == matrix[mid_row][mid_col]:
+            else:
                 return True
 
         return False
