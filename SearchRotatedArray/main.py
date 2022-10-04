@@ -100,11 +100,13 @@ if __name__ == '__main__':
     nums = [4, 5, 6, 7, 0, 1, 2]
     nums2 = [1]
     nums3 = [5, 1, 3]
+    nums4 = [3,1]
 
     target = 0
     target2 = 3
     target3 = 0
     target4 = 2
+    target5 = 1
 
     print(Solution().search(nums, target))
     print(Solution().search(nums, target2))
@@ -112,3 +114,5 @@ if __name__ == '__main__':
     print(Solution().search(nums2, target3))
 
     print(Solution().search(nums3, target4))
+
+    print(Solution().search(nums4, target5))
