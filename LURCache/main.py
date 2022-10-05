@@ -21,17 +21,13 @@ The functions get and put must run in O(1) time complexity
 
 """
 For this problem
-we'll be using a hashmap to return items in O(1) time complexity 
-and we can use a doubly linked list to keep track of most recent/least recent used items 
+We'll be initialize our cache as a dictionary - allowing us to return vals in O(1)
+self.cache = {}
+we'll be mapping self.cache = key: node(key,val) 
+and returning self.cache[key].val
 
-We'll be using a hashmap to map keys: node
-
-When we create a new key-val pair 
-or we "get" the val for a respective key
-we want to update the cache ie set respective key to most recent 
-
-We're going to be keeping track of most recent/least recent 
-using a doubly linked list 
+We'll want to keep track of our least recently/most recently used keys
+we'll do this using doubly linked list
 
 We'll use pointers 
 Left, Right 
@@ -41,13 +37,14 @@ and our most recent will always be inserted to the left of right ie right.prev
 """
 
 """
-Initialize a Node class
+Node class
 """
 class Node:
     def __init__(self, key, val):
         self.key = key
         self.val = val
 
+        # initialize prev, next pointers
         self.prev = None
         self.next = None
 
@@ -56,16 +53,15 @@ class LRUCache(object):
 
     def __init__(self, capacity):
         """
-        Initializes:
-        - hashmap for mapping keys: node
+        Initializes
+        - capacity
+        - cache dictionary
         - left, right pointers
 
-        left, right pointers shall initially be connected to one another
-        we are going to be inserting nodes in between left -> ___ -> right
-
+        We want to initially connect left and right pointers
+        as we will be inserting nodes in between left -> ___ -> right
         """
         self.capacity = abs(capacity)
-
         self.cache = {}
 
         # initialize pointers
@@ -77,15 +73,13 @@ class LRUCache(object):
 
     def get(self, key):
         """
-        Returns the val for the respective key
-        bc we are mapping key: nodes
-        our val is at cache[key].val
+        If key in cache
+        returns the respective val
+            since we are performing a "get" operation on a given key
+            we want to remove the node from our list
+            and re-insert it at the right-most position
 
-        Updates node position on our doubly linked list
-        we want to remove the respective node
-        and re-insert it at the right-most position ie most recently used
-
-        If the key not in self.cache
+        If key not in cache
         return -1
         """
         if key in self.cache:
@@ -93,6 +87,7 @@ class LRUCache(object):
             self.remove(self.cache[key])
             self.insert(self.cache[key])
 
+            # return node val
             return self.cache[key].val
         return -1
 
@@ -107,28 +102,28 @@ class LRUCache(object):
         - update cache mapping key: new Node
         - insert new Node into list
 
-        We also want to check our capacity,
-        if we're over capacity,
-        remove the left most node from our list
-        and delete the node from our cache
+        Check capacity
+        if len(cache) > capacity
+        - remove the left most node from our list
+        - delete the removed node's key from our cache
         """
 
-        # remove node from our list
+        # remove node from list
         if key in self.cache:
             self.remove(self.cache[key])
 
-        # update cache to map key: new Node
+        # update cache w new node
         self.cache[key] = Node(key, value)
 
-        # insert new node into our list
+        # insert new node
         self.insert(self.cache[key])
 
-        # if len self.cache > capacity
+        # capacity
         if len(self.cache) > self.capacity:
             lru = self.left.next
-            # remove LRU ie left-most node from our list
+            # remove LRU ie left-most node from list
             self.remove(lru)
-            # and delete node from our cache
+            # delete respective node's key from cache
             del self.cache[lru.key]
 
     """
@@ -146,7 +141,7 @@ class LRUCache(object):
 
         """
 
-        # get reference points
+        # get references
         prev = node.prev
         nxt = node.next
 
@@ -156,28 +151,26 @@ class LRUCache(object):
 
     def insert(self, node):
         """
-        Inserts nodes at the right most position
+        Inserts a node at the right-most position
 
-        To insert a node at right
-        We want to
-        # update right's pointers
-        - get a reference to the right most position;   prev = self.right.prev
-        - get a reference to our right node;    nxt = self.right
-            * used to set node.next = nxt
+        To insert a node at the right most position we need to
+        - get reference to right.prev
+        - get a reference to the right node
 
-        - insert node at prev's next;           prev.next = node
-        - update nxt node's, aka right node's, prev pointer = node
+        Update the pointers
+        - connecting right.prev to our node
+        - connecting prev.next to our node
 
-        # connect node's pointers
-        - set node.next = nxt
-        - set node.prev = prev
+        Update node's pointers
+        - connect node.next to right reference
+        - connect node.prev to prev reference
         """
 
-        # get references to right
+        # get references
         prev = self.right.prev
         nxt = self.right
 
-        # update right's pointers
+        # update pointers
         prev.next = node
         nxt.prev = node
 
