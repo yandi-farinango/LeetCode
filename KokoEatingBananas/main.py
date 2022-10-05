@@ -98,42 +98,32 @@ import math
 
 class Solution(object):
     def minEatingSpeed(self, piles, h):
-        left, right = 1, max(piles)
+        left, right = 0, max(piles)
 
         ans = right
 
-        while left < right:
-            # midpoint
+        while left <= right:
             k = (left + right) // 2
 
-            # hours counter
             hours = 0
-
             for pile in piles:
                 hours += math.ceil(pile / k)
 
             if hours <= h:
-                # we are searching for the min K
-                ans = min(k, ans)
-
-                # shift right pointer
-                # to keep searching for a smaller val
+                # we are searching for min k
                 right = k - 1
-
-            # else rate is too slow
-            # we need to shift left pointer
+                ans = min(ans, k)
             else:
                 left = k + 1
 
         return ans
 
+"""
+LeetCode has issues w math.ceil
+implemented solution w/o math.ceil
+"""
 class Solution2(object):
     def minEatingSpeed(self, piles, h):
-        """
-        LeetCode has issues w math.ceil
-        implemented solution w/o math.ceil
-        """
-
         left, right = 0, max(piles)
         ans = right
 
