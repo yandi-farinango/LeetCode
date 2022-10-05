@@ -68,39 +68,36 @@ If num[left] <= nums[mid] is FALSE
 
 class Solution(object):
     def findMin(self, nums):
-
-        minVal = nums[0]
-
         left, right = 0, len(nums) - 1
+
+        # ans placeholder
+        ans = nums[right]
 
         while left <= right:
 
             # if we ever get to a point where we are SORTED
             # i.e nums[left] < nums[right]
-            # we can update minVal to the left-most number
+            # we can update ans to the left-most number
             if nums[left] < nums[right]:
-                minVal = min(minVal, nums[left])
+                ans = min(ans, nums[left])
                 break
 
             mid = (left + right) // 2
 
-            # update minVal
-            minVal = min(minVal, nums[mid])
+            # update ans
+            ans = min(ans, nums[mid])
 
-            # LEFT portion
+            # mid corresponds to LEFT PORTION
             if nums[left] <= nums[mid]:
-                # If we are in the LEFT portion,
-                # we want to search RIGHT
-                # bc we know that the RIGHT portion contains smaller vals
+                # search right
                 left = mid + 1
 
-            # RIGHT portion
+            # mid corresponds to RIGHT PORTION
             else:
-                # if we are in the RIGHT portion
-                # we may want to search LEFT
+                # search left
                 right = mid - 1
 
-        return minVal
+        return ans
 
 
 if __name__ == '__main__':
