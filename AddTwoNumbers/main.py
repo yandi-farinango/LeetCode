@@ -1,86 +1,73 @@
 from LinkedList import *
 
 """
-We are given two lists
-each representing a number,
-written in reverse order
-
-    Ex: number =            123
-        linkedList =        3 -> 2 -> 1
-
-Add the two given numbers
-
-and return the ans
-as a linkedList
-following the same format
-
-    Ex:     number1 = 213
-            number2 = 521
-
-            ans = 734
-
-            --GIVEN--
-            list1 = 3->1->2
-            list2 = 1->2->5
-
-            ans = 4->3->7
-
+We are given two linked lists 
+representing numbers written in reverse order 
+    Ex: number: 123
+        list: 3->2->1
+        
+Add the two numbers 
+and return the ans in the same format 
 """
 
 """
-We can actually sum this pretty straightforward! 
-
-If we remember from elementary addition 
+We can add both numbers quite easily if we 
+write them out in elementary fashion 
              1
-    Ex:     125
-          + 456
+    Ex:     123
+          + 569
           ------
-            581
+            692
             
-We actually start adding from the ones place 
-we carry the one - from the tens place 
-etc. 
+We see that we actually start our addition at the ones-place
 
-Bc our numbers are given in REVERSE order 
-we can start adding vals at the head of the linked lists! 
+Lucky for us, 
+We are given the lists in reverse! ie. starting at the ones-place
+We can get these vals pretty easily l1.val, l2.val 
+and perform the addition 
 
-We'll create a dummy node where well be appending/connecting 
-our ans to 
+We also see that we're going to have to deal with carrying the tens place 
 
-We'll need a carry variable to hold tens-place vals 
-in the event that we need to carry 
+We can have a variable carry, 
+that will get updated with the tens-place value that we carry in the event of an addition where ans > 10
 
-Well get the carry val by val//10 
-well get the val by val % 10 
+
+We'll initialize a dummy node at the start
+where we will be appending the val at dummy.next 
+the val we want to append is the ones-place 
+we can get this by val = val % 10 
+and we set dummy.next = val 
+
+we can traverse while list1 or list 1 or carry 
 
 """
 
 
 class Solution(object):
-    def addTwoNumbers(self, l1, l2):
+    def addTwoNumbers(self, l1,l2):
         # initialize dummy node
         dummy = ListNode()
 
+        """
+        Traverse
+        """
         # pointer to dummy
         current = dummy
-
-        # intialize carry at 0
+        # initialize carry at 0
         carry = 0
 
         while l1 or l2 or carry:
             v1 = l1.val if l1 else 0
             v2 = l2.val if l2 else 0
 
-            # add vals
-            total_sum = v1 + v2 + carry
+            # addition
+            total = v1 + v2 + carry
 
-            # get val to carry
-            carry = total_sum // 10
+            # get tens, ones places
+            carry = total // 10
+            val = total % 10
 
-            # get ones - place val
-            val = total_sum % 10
-
-            # connect pointer
+            # connect to dummy
             current.next = ListNode(val)
 
             # shift pointers
@@ -92,29 +79,24 @@ class Solution(object):
 
 
 if __name__ == "__main__":
-    list1 = LinkedList()
+    l1 = LinkedList()
+    l1.head = ListNode(2, ListNode(4, ListNode(3)))
 
-    list1.head = Node(2)
-    l1 = Node(4)
-    l2 = Node(3)
+    l2 = LinkedList()
+    l2.head = ListNode(5, ListNode(6, ListNode(4)))
 
-    list1.head.next = l1
-    l1.next = l2
+    l3 = LinkedList()
+    l3.head = ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9)))))))
 
-    list2 = LinkedList()
+    l4 = LinkedList()
+    l4.head = ListNode(9, ListNode(9, ListNode(9, ListNode(9))))
 
-    list2.head = Node(5)
-    l1_2 = Node(6)
-    l2_2 = Node(4)
-
-    list2.head.next = l1_2
-    l1_2.next = l2_2
-
-    # Printing lists
-    printLinkedList(list1)
-    print('----')
-    printLinkedList(list2)
-
-    print('--ANS--')
-    ans = (Solution().addTwoNumbers(list1.head, list2.head))
+    # Should print 708
+    ans = Solution().addTwoNumbers(l1.head, l2.head)
     printLinkedList_head(ans)
+
+    print('-------')
+
+    # Should print 89990001
+    ans2 = Solution().addTwoNumbers(l3.head, l4.head)
+    printLinkedList_head(ans2)
