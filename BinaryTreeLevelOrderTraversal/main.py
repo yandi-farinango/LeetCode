@@ -47,36 +47,35 @@ class Solution(object):
 
         que = collections.deque()
 
-        # we start appending our root to our que
+        # we start at the root
         que.append(root)
 
         while que:
-            # qLen tells us how many times we'll be popping from our que
+            # we want to get qLen
             qLen = len(que)
-
-            # initialize variable for levels
-            # we will be popping from our q for each level
-            # and appending to levels
 
             level = []
 
             for i in range(qLen):
-                # pop node from que
-                # we will be appending node to levels
+                # we pop from que
                 node = que.popleft()
 
-                # we also append the children to our que
+                # if node
                 if node:
-                    # append node to level
+                    # we want to append the node to our level
                     level.append(node.val)
+
+                    # and append the children to our que
                     que.append(node.left)
                     que.append(node.right)
 
-            # append levels to res
+            # if we have nodes in level,
+            # we want to append to res
             if level:
                 res.append(level)
 
         return res
+
 
 if __name__ == '__main__':
     binary_tree = Tree()
