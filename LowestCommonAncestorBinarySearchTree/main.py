@@ -14,77 +14,58 @@ that has both p & q as descendants
 """
 
 """
-To solve this problem 
-we can start evaluating at the root
-since the root is a common ancestor 
-of ALL the nodes within the tree 
+In a binary search tree, 
+we can see that the lowest common ancestor between two nodes 
+occurs when the nodes split off into different trees 
 
-In a Binary Search Tree
-the left subtree of a node, contains nodes with smaller values 
-the right subtree of a node contains keys with greater values 
-Ex:             8
-              /   \
-            3      10
-           / \       \
-         1    6       14
-             / \      /
-            4   7     13
-            
-The lowest common ancestor of two nodes, p & q
-occurs at the point where p & q split into separate trees 
+            Ex:
+            6
+           / \
+         2     8
+       /  \   /  \
+      0    4 7    9
+          /\
+         3  5
 
-ie. in the tree above, 
-the LCA between nodes 1 & 6 = 3
-the LCA between nodes 4 & 7 = 6
-the LCA between nodes 1 & 7 = 3
-the LCA between nodes 4 & 13 = 8
+    - The LCA between two nodes 3 and 5 occurs at node 4,
+    where 3 and 5 split into separate trees 
+    
+    - The LCA between two nodes 4 and 9 occurs at node 6 
+    where nodes 4 and 9 split into separate trees 
 
-Bc nodes in a BST are increasing from left -> right 
-if we are given two nodes whose values are greater than root.left
-both nodes will be going pertain to the RIGHT tree 
+Knowing this, 
 
-Ex:              6
-               /   \
-              2      8
-             / \    /  \
-            0   4  7    9
-                /\
-               3  5
-
-Nodes 7 and 9 are greater than root.left
-Nodes 7 and 9 pertain to the same subtree
-    bc both 7 and 9 pertain to the same subtree, 
-    we dont need to search left!
-    we can just search right subtree, 
-    as both 7 & 9 pertain only to the right subtree, NOT left 
-
-ie We are looking for the split between two nodes! 
-
-
-*** in this problem, 
-if we are ever passed the root node as one of our inputs, 
-the LCA between inputs will always be the root node!  
-ie the root cannot be a child of any other node but itself! 
+To solve this problem we can, 
+start at the root node, 
+and evaluate where p and q both move in the same direction 
+We can see that 
+    -   if both nodes > current.left 
+        both nodes are in teh RIGHT tree
+    
+    -   if both nodes < current.right 
+        both nodes are in the LEFT tree
+        
+    -   else there is a split! 
+        return the node where the split occurs 
 """
 
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
-        # pointer to root node
+        # pointer to root
         current = root
 
         while current:
-            # if both p & q > current.val
+            # both p and q are greater than current
             if p.val > current.val and q.val > current.val:
-                # we only need to search RIGHT
+                # search RIGHT
                 current = current.right
 
-            # if both p & q < current.val
-            elif p.val > current.val and q.val > current.val:
-                # we only need to search LEFT
+            # both p and q are less than current
+            elif p.val < current.val and q.val < current.val:
+                # serach LEFT
                 current = current.left
 
-            # if p & q do not move in the same direction
-            # we have a split! ie we've found LCA
+                # We've found the split!
             else:
                 return current
 
