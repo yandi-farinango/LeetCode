@@ -23,50 +23,56 @@ output: [3], [9, 20], [15, 7]
 """
 
 """
-Looking at the output 
-we can see that we want to essentially return 
-a list of nodes for each level 
+We can solve this problem using a que 
 
-We are going to be traversing the tree
-from left -> right 
-one level at a time 
+We'll want to initialize a res = [] 
+we will be appending [] to our res for each level 
 
+Were also going to be using a que 
 
-We want to run BFS!! 
+We will be going through the tree, 
+adding vals to the que 
 
+as we add values to the que we also want to len(q) values 
+and append them to a list = []
 
-We'll be using a que 
-
-
+We append list to our res 
+return res 
 
 """
 
 class Solution(object):
     def levelOrder(self, root):
-        # initialize res
         res = []
 
-        # initialize que
-        q = collections.deque()
-        q.append(root)
+        que = collections.deque()
 
-        while q:
-            # get the number of elements in our q
-            # we will be removing qLen elements from our q
-            qLen = len(q)
+        # we start appending our root to our que
+        que.append(root)
+
+        while que:
+            # qLen tells us how many times we'll be popping from our que
+            qLen = len(que)
+
+            # initialize variable for levels
+            # we will be popping from our q for each level
+            # and appending to levels
 
             level = []
 
             for i in range(qLen):
-                # we pop from q
-                node = q.popleft()
+                # pop node from que
+                # we will be appending node to levels
+                node = que.popleft()
 
-                # and add its children to our q
+                # we also append the children to our que
                 if node:
+                    # append node to level
                     level.append(node.val)
-                    q.append(node.left)
-                    q.append(node.right)
+                    que.append(node.left)
+                    que.append(node.right)
 
+            # append levels to res
             if level:
                 res.append(level)
 
