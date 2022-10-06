@@ -78,19 +78,19 @@ class Solution(object):
             # left portion
             if nums[left] <= nums[mid]:
                 if target > nums[mid] or target < nums[left]:
-                    # search left
+                    # search right
                     left = mid + 1
                 else:
-                    # search right
+                    # search left
                     right = mid - 1
 
             # right portion
             else:
                 if target < nums[mid] or target > nums[right]:
-                    # search right
+                    # search left
                     right = mid - 1
                 else:
-                    # search left
+                    # search right
                     left = mid + 1
 
         return -1
