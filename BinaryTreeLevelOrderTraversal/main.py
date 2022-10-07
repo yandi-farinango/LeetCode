@@ -43,38 +43,37 @@ return res
 
 class Solution(object):
     def levelOrder(self, root):
-        res = []
+        # initialize ans
+        ans = []
 
         que = collections.deque()
 
-        # we start at the root
         que.append(root)
 
         while que:
-            # we want to get qLen
+            # get counter
             qLen = len(que)
 
+            # initialize list to append node.val for each level
             level = []
 
             for i in range(qLen):
-                # we pop from que
+                # pop from que
                 node = que.popleft()
 
                 # if node
                 if node:
-                    # we want to append the node to our level
                     level.append(node.val)
 
-                    # and append the children to our que
+                    # append node's children
                     que.append(node.left)
                     que.append(node.right)
 
-            # if we have nodes in level,
-            # we want to append to res
+            # append levels to ans
             if level:
-                res.append(level)
+                ans.append(level)
 
-        return res
+        return ans
 
 
 if __name__ == '__main__':
