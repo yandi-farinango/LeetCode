@@ -43,13 +43,14 @@ class Solution(object):
                 return True
 
             # if not true, we want to return False
-            if not (right > node.val > left):
+            if not (left < node.val < right):
                 return False
 
             # recursive call to children
             return dfs(node.left, left, node.val) and \
                    dfs(node.right, node.val, right)
 
+        # return ans
         return dfs(root, float("-inf"), float("inf"))
 
 
