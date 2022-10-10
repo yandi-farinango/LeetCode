@@ -15,21 +15,23 @@ A valid BST is defined as
 """
 
 """
-We can solve this problem 
-using a recursive DFS
+We can solve this using a recursive DFS 
 
-For our recursive function 
-we're going to pass in the node 
-and the left and right boundaries 
+For each node, 
+we want to check if 
+left < node < right
 
+we'll be passing in left, right in our recursive function 
 
-# base case
-if not node 
+Our base case:
+if not node
 return True 
-bc an empty would be valid 
+bc an empty node can be considered a good bst 
 
+we'll do recursive calls on the nodes
+left and right children 
 
-
+return true if if recursive calls for left, right child hold true 
 """
 
 class Solution(object):
