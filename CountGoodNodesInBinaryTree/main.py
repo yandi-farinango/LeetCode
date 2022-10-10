@@ -26,42 +26,45 @@ in the binary tree
 """
 
 """
-We can solve this recursively 
-depth first search
+We can solve this problem 
+using a recursive depth first search 
 
-We'll set up our recursive function: 
-For each node, we want to check 
-if any prior node's value is greater 
-we'll be passing maxVal in our recursive dfs 
+at each level
+we want to compare the current nodes value 
+to the maxVal of nodes previous 
 
-Our base case - if not node:
-return 0 bc an empty tree wont have any good nodes 
+We can pass in maxVal as we set up our recursive function 
 
-res = 1 if node.val >= maxVal else 0 
-update maxVal
+we'll have a variable, res 
+that will be used as a counter 
 
-increment res on recursive dfs call to left and right subtree 
+our base case 
+if not node return 0
+
+res will be incrememnted on the recursive calls 
+to the node's children 
+
 return res 
 
-After we've set up the recursive function, 
-we can pass dfs(root, root.val) 
+return dfs(root, root.val)
 """
 
 class Solution(object):
     def goodNodes(self, root):
+
         # set up recursive dfs
         def dfs(node, maxVal):
             # base case
             if not node:
                 return 0
 
-            # initialize variable for res
+            # res counter
             res = 1 if node.val >= maxVal else 0
 
-            # update maxVal
+            # update maxval
             maxVal = max(maxVal, node.val)
 
-            # recursive call to subtrees
+            # recursive call to children
             res += dfs(node.left, maxVal)
             res += dfs(node.right, maxVal)
 
