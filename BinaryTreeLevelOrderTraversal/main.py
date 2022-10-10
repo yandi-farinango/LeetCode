@@ -23,21 +23,28 @@ output: [3], [9, 20], [15, 7]
 """
 
 """
-We can solve this problem using a que 
+We want to return a list 
+of nodes level x level 
 
-We'll want to initialize a res = [] 
-we will be appending [] to our res for each level 
+We're going to be traversing the tree by level
+breadth first search 
 
-Were also going to be using a que 
+To implement, 
+we'll use a que 
 
-We will be going through the tree, 
-adding vals to the que 
+at each level we can add nodes to our que 
 
-as we add values to the que we also want to len(q) values 
-and append them to a list = []
+we'll also want to use a variable, levels = []
+where we will be appending nodes in each level 
 
-We append list to our res 
-return res 
+we'll pop nodes from the left of our que 
+append to levels
+
+and add the node's children into our que 
+
+we'll do this for i in range (len(que))
+which will run for the number of nodes 
+in each level 
 
 """
 
