@@ -49,24 +49,26 @@ we can pass dfs(root, root.val)
 
 class Solution(object):
     def goodNodes(self, root):
+        # set up recursive dfs
         def dfs(node, maxVal):
-            # base case - an empty tree wont have any good nodes ie its EMPTY
+            # base case
             if not node:
                 return 0
 
+            # initialize variable for res
             res = 1 if node.val >= maxVal else 0
 
             # update maxVal
             maxVal = max(maxVal, node.val)
 
-            # recursive call's to left, right subtree
+            # recursive call to subtrees
             res += dfs(node.left, maxVal)
             res += dfs(node.right, maxVal)
 
             return res
 
-        # recursive call to root
         return dfs(root, root.val)
+
 
 if __name__ == '__main__':
     tree = Tree
