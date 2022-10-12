@@ -43,6 +43,7 @@ to find the duplicate val
 We will find the duplicate val by intializing 
 slow, fast = 0, 0
 
+while True
 we'll shift our pointers
 slow = nums[slow]
 fast = nums[nums[fast]]
@@ -56,6 +57,7 @@ Once we've found our first intersection point
 we'll want to introduce 
 slow_2 = 0
 
+while True
 We'll move our slow pointers 
 slow = nums[slow]
 slow_2 = nums[slow_2]
@@ -63,7 +65,7 @@ slow_2 = nums[slow_2]
 At the point where slow == slow_2 
 We've found our 2nd intersection 
 
-THIS IS OUR DUPLCIATE! 
+THIS IS OUR DUPLICATE! 
 We can return either slow or slow_2 
 
 """
