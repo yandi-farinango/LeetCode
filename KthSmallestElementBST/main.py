@@ -20,37 +20,32 @@ of all the values of the nodes in the tree
 """
 
 """
-For this problem
-we want to perform a value order traversal 
+To do this
+we want to search the tree according to the node values 
 
-We know that the smallest values are going to be the left most children 
+We can do this using a stack 
 
-We can use a stack 
-and append the left most nodes 
+We know that in a BST the smallest values are going to be the leftmost
+we want to shift our pointer in the leftmost direction 
 
-We'll want to use a counter n 
-which will be updated continuously
+We want to be appending/popping values from our stack in value order 
+we'll use a counter that will get incremented whenever we pop 
+this will keep track of when we've found the nth smallest value 
 
-we'll set our current pointer to root 
+First we want to be appending the leftmost values 
+we can append current 
+and reset current = current.left 
 
-while current or stack 
-while current 
-    we want to append the current value to our stack 
-    and set current= current.left; ie we want to move in the leftmost direction
-    
-we'll pop from our stack, 
-our current value would now be the left most val
-current = stack.pop
-and we'll update the counter 
+we'll pop from our stack 
+and have current = pop
+we increment our counter 
 
-if counter == K 
-return current.val
+if counter == k 
+return current .val
 
-and we append current's right child 
-
-this way we are appending values in value-order 
-and when n == k 
-we've found the nth smallest val
+now we set current = current.right 
+such that the current.right resets the loop
+and gets appended to our stack on the reset 
 """
 
 class Solution(object):
@@ -64,12 +59,10 @@ class Solution(object):
 
         while current or stack:
             while current:
-                # append current
+                # appending leftmost values
                 stack.append(current)
-                # shift current towards the leftmost direction
                 current = current.left
 
-            # pop
             current = stack.pop()
 
             # increment counter
@@ -79,8 +72,8 @@ class Solution(object):
                 return current.val
 
             # set current = current.right
-            # such that it will reset the loop
-            # current.right get appended to our stack in the loop reset
+            # such that it resents the loop
+            # current.right gets appended to our stack at reset
             current = current.right
 
 
