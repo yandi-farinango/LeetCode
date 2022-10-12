@@ -35,13 +35,15 @@ to the maxVal of nodes previous
 
 We can pass in maxVal as we set up our recursive function 
 
-we'll have a variable, res 
-that will be used as a counter 
-
 our base case 
 if not node return 0
 
-res will be incrememnted on the recursive calls 
+we'll have a variable, res 
+that will be used as a counter 
+
+res will = 1 if node.val >= maxVal else 0 
+
+res will be incremented on the recursive calls 
 to the node's children 
 
 return res 
