@@ -51,7 +51,7 @@ We can see that
 
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
-        # pointer to root
+        # pointer
         current = root
 
         while current:
@@ -62,7 +62,7 @@ class Solution(object):
 
             # both p and q are less than current
             elif p.val < current.val and q.val < current.val:
-                # serach LEFT
+                # search LEFT
                 current = current.left
 
                 # We've found the split!
