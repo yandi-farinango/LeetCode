@@ -28,30 +28,31 @@ We can do this using a stack
 We know that in a BST the smallest values are going to be the leftmost
 we want to shift our pointer in the leftmost direction 
 
-We want to be appending/popping values from our stack in value order 
-we'll use a counter that will get incremented whenever we pop 
-this will keep track of when we've found the nth smallest value 
+while current or stack 
+    while current 
+        append left values to our stack 
+        shift current pointer to get leftmost values 
+        current = current.left 
 
-First we want to be appending the leftmost values 
-we can append current 
-and reset current = current.left 
+current = stack.pop()
 
-we'll pop from our stack 
-and have current = pop
-we increment our counter 
+we'll increment our counter 
 
-if counter == k 
-return current .val
+if counter == k:
+return current.val 
 
-now we set current = current.right 
-such that the current.right resets the loop
-and gets appended to our stack on the reset 
+shift current pointer = current.right 
+
+this resets our while loop 
+such that the right child 
+is then appended to our stack 
+in value order 
+            
 """
 
 class Solution(object):
     def kthSmallest(self, root, k):
-        # counter
-        n = 0
+        counter = 0
 
         stack = []
 
@@ -59,21 +60,20 @@ class Solution(object):
 
         while current or stack:
             while current:
-                # appending leftmost values
+                # append current
                 stack.append(current)
+
+                # shift current left
                 current = current.left
 
             current = stack.pop()
 
-            # increment counter
-            n += 1
+            counter += 1
 
-            if n == k:
+            if counter == k:
                 return current.val
 
-            # set current = current.right
-            # such that it resents the loop
-            # current.right gets appended to our stack at reset
+                # shift pointer right
             current = current.right
 
 
@@ -89,4 +89,4 @@ if __name__ == '__main__':
 
     tree.root.left.left.left = TreeNode(1)
 
-    print(Solution().kthSmallest(tree.root, 4))
+    print(Solution().kthSmallest(tree.root, k=3))
