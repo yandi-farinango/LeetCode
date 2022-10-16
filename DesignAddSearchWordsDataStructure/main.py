@@ -20,10 +20,12 @@ for search function
     we're going to be doing the search function 
     recursively 
     
-    
-    
+"""
 
 """
+Implement TrieNode
+"""
+
 
 class TrieNode:
     def __init__(self):
@@ -34,18 +36,23 @@ class TrieNode:
 class WordDictionary(object):
     def __init__(self):
         """
-        initializes the object
-
-        to initialize a wordDictionary object
-        we'll need to initialize a root
+        initializes WordDictionary object
+        to initialize WordDictionary as a trie prefix tree
+        we'll need to initialize a root node
         """
 
         self.root = TrieNode()
 
-
     def addWord(self, word):
         """
-        adds word to wordDictionary
+        adds a word to the dictionary
+
+        for adding words to a dictionary,
+        we'll go through each char
+        if char not in current.dictionary,
+        we can add it by mapping char: TrieNode()
+
+        we'll also have to set endOfWord = True
         """
 
         # pointer
@@ -53,7 +60,7 @@ class WordDictionary(object):
 
         for char in word:
             if char not in current.children:
-                # map char: TrieNode()
+                # map char: TrieNode
                 current.children[char] = TrieNode()
 
             # shift pointer
@@ -64,28 +71,30 @@ class WordDictionary(object):
 
     def search(self, word):
         """
-        returns True
-        if there is any string in wordDictionary
-        that matches word
+        searches wordDictionary, return true if word in wordDictionary
 
-        * word may contain dots,
-        where dots can be matched with any letter
+        will be a recursive function
+        start by writing out the iterative, if c not '.'
+
         """
-
-        # pointer
 
         def dfs(j, root):
             current = root
 
+            # we for i in range j, len(word) bc we are getting this from recursive
             for i in range(j, len(word)):
                 c = word[i]
 
-                # dot
-                # if we have a string '.ab'
-                # we can traverse any node, ie . corresponds to any char
                 if c == '.':
-                    # getting each sub-tree ie any node corresponding to all chars
+                    # a dot can represent any of current.children.values()
                     for child in current.children.values():
+                        # we'll actually be doing this recursively
+                        # we're passing in the index of the remaining chars
+                        # ie the chars after the dot, we'll call it j
+                        # our j will be i + 1
+                        # because we are at index
+                        # for i in range len(word)
+                        # and we'll pass in the node, child,
                         if dfs(i + 1, child):
                             return True
 
@@ -94,10 +103,14 @@ class WordDictionary(object):
                 else:
                     if c not in current.children:
                         return False
-                    # if char does exist, we want to shift our pointer down to search next chars
+
                     else:
+                        # shift pointer
                         current = current.children[c]
+
             return current.endOfWord
+
+        # call to dfs
         return dfs(0, self.root)
 
 
