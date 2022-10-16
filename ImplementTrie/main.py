@@ -91,14 +91,15 @@ class Trie(object):
         to insert words into the trie
         we'll need to traverse chars in word
         and create new trie nodes representing each char
+
+        we'll also need to mark endOfWord
         """
 
-        # pointer to root
+        # pointer
         current = self.root
 
         for char in word:
             if char not in current.children:
-                # map char: TrieNode
                 current.children[char] = TrieNode()
 
             # shift pointer
@@ -124,7 +125,7 @@ class Trie(object):
         ie previously marked as True if endOfWord
         """
 
-        # pointer to root
+        # pointer
         current = self.root
 
         for char in word:
@@ -134,7 +135,6 @@ class Trie(object):
             # shift pointer
             current = current.children[char]
 
-        # check endOfWord
         return current.endOfWord
 
     def startsWith(self, prefix):
@@ -146,7 +146,7 @@ class Trie(object):
         except that we do not need to check for endOfWord
         """
 
-        # pointer to root
+        # pointer
         current = self.root
 
         for char in prefix:
@@ -156,6 +156,7 @@ class Trie(object):
             # shift pointer
             current = current.children[char]
 
+        # return True
         return True
 
 
