@@ -81,7 +81,7 @@ class Solution(object):
         if not preorder or not inorder:
             return None
 
-            # construct root
+        # construct root
         root = TreeNode(preorder[0])
 
         # get index
