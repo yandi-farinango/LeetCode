@@ -27,24 +27,37 @@ class Solution(object):
         k = len(nums) - k
 
         def quickSelect(left, right):
-            pivot, p = nums[right], left
 
+            # initialize p pointer, pivot
+            p, pivot = left, nums[right]
+
+            # partition
             for i in range(left, right):
                 if nums[i] <= pivot:
+                    # swap with itself
                     nums[p], nums[i] = nums[i], nums[p]
+                    # increment counter
                     p += 1
 
+            # swap pivot at partition
             nums[p], nums[right] = nums[right], nums[p]
 
-            if p > k:
+            # recursive calls
+
+            # we know the kth largest lies within the left half,
+            # ie in our recursive call, we set right to p-1
+            if k < p:
                 return quickSelect(left, p - 1)
 
-            elif p < k:
+            # we know the kth largest lies within the p + 1 partition
+            elif k > p:
                 return quickSelect(p + 1, right)
 
+            # found kth largest
             else:
                 return nums[p]
 
+        # base recursive call
         return quickSelect(0, len(nums) - 1)
 
 
