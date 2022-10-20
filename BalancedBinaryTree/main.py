@@ -10,6 +10,7 @@ class TreeNode(object):
         self.left = left
         self.right = right
 
+
 class Solution(object):
     def dfs(root):
         if not root:
