@@ -26,53 +26,56 @@ in the binary tree
 """
 
 """
-We can solve this problem 
-using a recursive depth first search 
+We're going to solve this recursively 
+where we'll have a variable, res, 
+that will get incremented 
+at each recursive call 
 
-at each level
-we want to compare the current nodes value 
-to the maxVal of nodes previous 
+we'll also be passing along maxVal 
+which will get updated at each level 
+ie res += 1 if node.val >= maxVal
 
-We can pass in maxVal as we set up our recursive function 
+To set up our recursive function, 
+We can start with our base case 
 
-our base case 
-if not node return 0
+if not node:
+return 0 
 
-we'll have a variable, res 
-that will be used as a counter 
+we'll then set up our res counter
+res = 1 if node.val >= maxVal
 
-res will = 1 if node.val >= maxVal else 0 
+we update maxVal continuously at each recursive loop 
 
-res will be incremented on the recursive calls 
-to the node's children 
+and 
+increment res 
+on the recursive calls 
+ie  res += recursion(node.left, maxVal)
+    res += recursion(node.right, maxVal)
 
-return res 
 
-return dfs(root, root.val)
 """
 
 class Solution(object):
     def goodNodes(self, root):
 
-        # set up recursive dfs
-        def dfs(node, maxVal):
-            # base case
+        def recursion(node, maxVal):
             if not node:
                 return 0
 
-            # res counter
+            # initialize res tracker
             res = 1 if node.val >= maxVal else 0
 
-            # update maxval
+            # update maxVal
             maxVal = max(maxVal, node.val)
 
-            # recursive call to children
-            res += dfs(node.left, maxVal)
-            res += dfs(node.right, maxVal)
+            # increment res on recursive calls
+            res += recursion(node.left, maxVal)
+            res += recursion(node.right, maxVal)
 
             return res
 
-        return dfs(root, root.val)
+        # main recursive call
+        return recursion(root, root.val)
 
 
 if __name__ == '__main__':
