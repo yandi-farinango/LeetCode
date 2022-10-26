@@ -71,47 +71,64 @@ class WordDictionary(object):
 
     def search(self, word):
         """
-        searches wordDictionary, return true if word in wordDictionary
+        When searching for a word,
+        we want to return true if a word exists in our trie
 
-        will be a recursive function
-        start by writing out the iterative, if c not '.'
+        we'll traverse the word
+        for i in range(len(word))
+        c = word[i]
+
+        if
+            char = '.', it can count towards any char,
+            this will have to be done recursively
+
+
+        else
+            if c not in current.children
+                return false
+
+            else
+                shift current pointer
+
+        return end of word
 
         """
 
-        def dfs(j, root):
+        def dfs(root, j):
             current = root
 
-            # we for i in range j, len(word) bc we are getting this from recursive
             for i in range(j, len(word)):
                 c = word[i]
 
                 if c == '.':
-                    # a dot can represent any of current.children.values()
+                    # '.' can count towards any char,
+                    # we want to check all currents children braches
                     for child in current.children.values():
-                        # we'll actually be doing this recursively
-                        # we're passing in the index of the remaining chars
-                        # ie the chars after the dot, we'll call it j
-                        # our j will be i + 1
-                        # because we are at index
-                        # for i in range len(word)
-                        # and we'll pass in the node, child,
-                        if dfs(i + 1, child):
+
+                        # recursive call, skipping over .
+                        # by incrementing i
+                        if dfs(child, i + 1):
+                            # if word search ends in .
+                            # we'll never execute below code,
+                            # so we want to return True
                             return True
 
                     return False
 
+                # non recursive
                 else:
                     if c not in current.children:
                         return False
 
+                    # shift pointer
                     else:
-                        # shift pointer
                         current = current.children[c]
 
+            # return endOfWord
             return current.endOfWord
 
-        # call to dfs
-        return dfs(0, self.root)
+        # return recursive call
+        return dfs(self.root, 0)
 
 
 if __name__ == '__main__':
@@ -130,5 +147,13 @@ if __name__ == '__main__':
     print(wordDict.search('.ad'))
     # return True
     print(wordDict.search('b..'))
+
+
+
+
+
+
+
+
 
 
