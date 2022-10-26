@@ -23,28 +23,37 @@ output: [3], [9, 20], [15, 7]
 """
 
 """
-We want to return a list 
-of nodes level x level 
+We are given the root of a binary tree 
+We want to return ans = [[]]
 
-We're going to be traversing the tree by level
-breadth first search 
+We are going to be traversing the tree 
+level by level        
+For each level, we want to append to a list 
+and append list to ans 
+return ans 
 
-To implement, 
-we'll use a que 
+We can traverse the tree level by level 
+using a que 
 
-at each level we can add nodes to our que 
+we'll append the root to our que 
 
-we'll also want to use a variable, levels = []
-where we will be appending nodes in each level 
+while que:
+we'll get queLen 
+and initialize level 
 
-we'll pop nodes from the left of our que 
-append to levels
+for i in range q len, 
+we want to append the nodes children to the que 
 
-and add the node's children into our que 
+and we also want to pop nodes in our que 
 
-we'll do this for i in range (len(que))
-which will run for the number of nodes 
-in each level 
+this way, 
+we are continuously adding nodes to our que 
+corresponding to each level 
+
+and when we pop from our que, we want to append 
+to levels=[]
+
+and append levels to ans 
 
 """
 
@@ -58,27 +67,21 @@ class Solution(object):
         que.append(root)
 
         while que:
-            # get counter
-            qLen = len(que)
+            levels = []
 
-            # initialize list to append node.val for each level
-            level = []
+            # queLen
+            queLen = len(que)
 
-            for i in range(qLen):
-                # pop from que
+            for i in range(queLen):
                 node = que.popleft()
 
-                # if node
                 if node:
-                    level.append(node.val)
-
-                    # append node's children
+                    levels.append(node.val)
                     que.append(node.left)
                     que.append(node.right)
 
-            # append levels to ans
-            if level:
-                ans.append(level)
+            if levels:
+                ans.append(levels)
 
         return ans
 
