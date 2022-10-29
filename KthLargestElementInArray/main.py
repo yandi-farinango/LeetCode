@@ -7,18 +7,28 @@ Must run in O(n)
 """
 
 """
-We are going to solve this problem 
-implementing a quick-select algorithm 
+We can solve this problem 
+using quick-select algorithm 
 
-Quick select will be implemented recursively 
+Quick select is implemented recursively 
 
-For the quick-select function
-we'll pass in a left, right pointer 
+For quick select, 
+We want to partition our nums array 
+such that, 
+if we pick a random pivot, ie last index in nums, 
+vals LESS than our pivot are stored to the left of the partition 
+vals GREATER/EQUAL to our pivot are stored to the right of the partition 
 
-we'll initialize 
-pivot = nums[right]
-p = left 
 
+we know our kth largest element is going to be at position len - k 
+
+since we're doing this recursively, we can just say that we've found the kth largest element 
+at the point where len-k = p
+
+we'll want to set this up recursively 
+in order to do that, we'll be passing in pointers left, right 
+we'll recursively set our pivot to nums[right]
+our left pointer will be used to traverse the array as we compare vals at position p 
 
 """
 
@@ -27,36 +37,43 @@ class Solution(object):
     def findKthLargest(self, nums, k):
 
         # initialize k
-        k = len(nums) - k
+        kth_index = len(nums) - k
 
         # set recursive function
         def quickSelect(left, right):
 
             # initialize p, pivot
-            p, pivot = left, nums[right]
+            pivot, p = nums[right], left
 
-            # partition
+            # set up partition
             for i in range(left, right):
                 if nums[i] <= pivot:
-                    # swap nums[i], nums[p]
+                    # swap val w its own position,
+                    # ie val remains in its original position
                     nums[i], nums[p] = nums[p], nums[i]
+
+                    # shift pointer
                     p += 1
 
-            # swap pivot, p
+            # swap pivot w p pointer position
             nums[p], nums[right] = nums[right], nums[p]
 
             # recursive calls
-            # if k < p, run quickSelect on LEFT
-            if k < p:
+            # if kth_index < p, run quickSelect on LEFT to search for a smaller index
+            if kth_index < p:
+                # shift right p-1
                 return quickSelect(left, p - 1)
 
-            # if k > p; run quickSelect on RIGHT
-            elif k > p:
+            # if kth_index > p; run quickSelect on RIGHT to search for a greater index
+            elif kth_index > p:
+                # shift left p+1
                 return quickSelect(p + 1, right)
 
             else:
+                # found kth largest
                 return nums[p]
 
+        # recursive call
         return quickSelect(0, len(nums) - 1)
 
 
