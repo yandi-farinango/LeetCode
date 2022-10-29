@@ -36,8 +36,8 @@ our left pointer will be used to traverse the array as we compare vals at positi
 class Solution(object):
     def findKthLargest(self, nums, k):
 
-        # initialize k
-        kth_index = len(nums) - k
+        # get target_index
+        target_index = len(nums) - k
 
         # set recursive function
         def quickSelect(left, right):
@@ -59,13 +59,13 @@ class Solution(object):
             nums[p], nums[right] = nums[right], nums[p]
 
             # recursive calls
-            # if kth_index < p, run quickSelect on LEFT to search for a smaller index
-            if kth_index < p:
+            # if target_index < p, run quickSelect on LEFT to search for a smaller index
+            if target_index < p:
                 # shift right p-1
                 return quickSelect(left, p - 1)
 
-            # if kth_index > p; run quickSelect on RIGHT to search for a greater index
-            elif kth_index > p:
+            # if target_index > p; run quickSelect on RIGHT to search for a greater index
+            elif target_index > p:
                 # shift left p+1
                 return quickSelect(p + 1, right)
 
