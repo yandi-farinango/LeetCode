@@ -7,28 +7,48 @@ Must run in O(n)
 """
 
 """
-We can solve this problem 
-using quick-select algorithm 
+To solve this problem, 
+We're going to implement a quick select algorithm 
 
-Quick select is implemented recursively 
+We want to get our target_index
+target_index = len(nums) - k
 
-For quick select, 
-We want to partition our nums array 
-such that, 
-if we pick a random pivot, ie last index in nums, 
-vals LESS than our pivot are stored to the left of the partition 
-vals GREATER/EQUAL to our pivot are stored to the right of the partition 
+The for quick select, 
+we have a pointer p, 
+and a pivot 
 
+we are going to traverse through nums 
+and partition nums 
+such that all numbers less than pivot 
+are stored in the left portion of nums array 
 
-we know our kth largest element is going to be at position len - k 
+We'll have this run recursively, 
 
-since we're doing this recursively, we can just say that we've found the kth largest element 
-at the point where len-k = p
+to set up our recursive function, 
+we're going to pass (left, right)
+our pivot will be set = nums[right]
+and we'll have our p pointer set to left, 
 
-we'll want to set this up recursively 
-in order to do that, we'll be passing in pointers left, right 
-we'll recursively set our pivot to nums[right]
-our left pointer will be used to traverse the array as we compare vals at position p 
+for the partition
+for i in range len(nums)
+swap nums[p] with nums[i]
+
+after our partition,
+we'll want to swap p and pivot 
+
+Recursive Calls 
+if target_index < p
+we want to search down 
+we can search down by adjusting our right pointer 
+adjust pointer(left, p - 1)
+
+if target_index > p
+we want to search up 
+we can search up by adjusting the left pointer 
+adjust left pointer (p + 1, right)
+
+if p == target_index
+return nums[p]
 
 """
 
@@ -36,41 +56,32 @@ our left pointer will be used to traverse the array as we compare vals at positi
 class Solution(object):
     def findKthLargest(self, nums, k):
 
-        # get target_index
         target_index = len(nums) - k
 
-        # set recursive function
         def quickSelect(left, right):
-
-            # initialize p, pivot
             pivot, p = nums[right], left
 
-            # set up partition
+            # partition
             for i in range(left, right):
                 if nums[i] <= pivot:
-                    # swap val w its own position,
-                    # ie val remains in its original position
+                    # swap nums
                     nums[i], nums[p] = nums[p], nums[i]
 
-                    # shift pointer
+                    # increment p
                     p += 1
 
-            # swap pivot w p pointer position
+                    # swap pivot and p
             nums[p], nums[right] = nums[right], nums[p]
 
-            # recursive calls
-            # if target_index < p, run quickSelect on LEFT to search for a smaller index
             if target_index < p:
-                # shift right p-1
+                # search down by adjusting our right pointer p-1
                 return quickSelect(left, p - 1)
 
-            # if target_index > p; run quickSelect on RIGHT to search for a greater index
             elif target_index > p:
-                # shift left p+1
+                # search up by adjusting our left pointer p+1
                 return quickSelect(p + 1, right)
 
             else:
-                # found kth largest
                 return nums[p]
 
         # recursive call
