@@ -45,10 +45,10 @@ our base case
 if i >= len(nums)
 we know that our recursive function is now out of bounds 
 ie we've gone through all each index
-we append subset.copy to ans
+we append a copy of our subset list to ans
 
 we can say if i >= len(nums)
-ans.append(subset.copy())
+ans.append(list(subset))
 return 
 
 
@@ -94,7 +94,7 @@ class Solution(object):
 
             # if our index is out of range, we've gone through every index in nums
             if index >= len(nums):
-                ans.append(subset.copy())
+                ans.append(list(subset))
                 return
 
             # decision to include nums[index]
@@ -103,7 +103,7 @@ class Solution(object):
 
             # decision NOT to include nums[index]
             subset.pop()
-            dfs(index+1)
+            dfs(index + 1)
 
         dfs(0)
 
