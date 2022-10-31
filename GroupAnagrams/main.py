@@ -45,9 +45,13 @@ of the respective letter
     
 We can use a hashmap, res,
 to map COUNT:anagrams
-Our key will be tuple(COUNT) 
+
+Our key will be a tuple(COUNT) 
 and we will append strings 
 with same tuple(COUNT)
+
+To be able to use a tuple as a dictionary key, 
+we'll need to use collections.defaultdict(list)
 
 Finally, we return 
 res.values
@@ -59,18 +63,22 @@ res.values
 
 class Solution(object):
     def groupAnagram(self, strs):
+
+        # initialize res as defaultdict(list)
         res = collections.defaultdict(list)
 
-        for s in strs:
-            count = [0] * 26
+        for word in strs:
+            # initialize charCount
+            charCount = [0] * 26
 
-            for c in s:
-                count[ord(c) - ord("a")] += 1
+            # get charCount
+            for char in word:
+                charCount[ord(char) - ord('a')] += 1
 
-            res[tuple(count)].append(s)
+            # we append word to a tuple of charCounut
+            res[tuple(charCount)].append(word)
 
         return res.values()
-
 
 
 if __name__ == '__main__':
