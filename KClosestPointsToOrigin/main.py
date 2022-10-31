@@ -15,26 +15,29 @@ Distance between points
 import heapq
 
 """
-We can solve this problem using a minHeap 
+We can solve this using a minHeap 
 
-We'll have a res variable 
+We'll have a res variable = []
+where we'll be appending the coordinates of the kth closest point
 
+and we'll want to loop 
+for x, y 
 
-we'll want to loop 
-for x, y in distance 
-we want to set up our minHeap such that it follows 
-distance, x, y
-minHeap.append(distance, x, y)
+We'll be appending distance from origin
+to our minHeap 
+minHeap.append([distance, x, y])
 
+in order to get the kth closest point to the origin, 
+we'll need to pop from our minHeap k times 
 
-We'll be popping from our heap k times 
-so we want our first values to be the distance to the origin 
-
+we can say
 while k > 0 
-we'll pop distance, x, y from our minHeap
-and append([x, y]) 
-decrement k
+    we pop distance, x, y from our minHeap
+    append [x, y] to res
 
+    decrement k -=1 
+
+return res
 
 """
 
@@ -44,14 +47,14 @@ class Solution(object):
         # initialize res
         res = []
 
-        # initialize minHeap
+        # minHeap variable
         minHeap = []
 
+        # populate and heapify minHeap
         for x, y in points:
-            distance = (x**2) + (y**2)
-            minHeap.append([distance, x, y])
+            # append to minHeap
+            minHeap.append([(x ** 2) + (y ** 2), x, y])
 
-        # heapify minHeap
         heapq.heapify(minHeap)
 
         while k > 0:
