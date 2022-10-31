@@ -83,10 +83,10 @@ class Solution(object):
 
         stack = []
 
-        pos = [[pos, speed] for pos, speed in zip(position, speed)]
-        pos.sort()
+        cars = [[pos, speed] for pos, speed in zip(position, speed)]
+        cars.sort()
 
-        for pos, speed in pos[::-1]:
+        for pos, speed in cars[::-1]:
 
             # calculate expected arrival time
             stack.append((target - pos) / speed)
@@ -108,19 +108,21 @@ Another implementation
 
 class Solution2(object):
     def carFleet(self, target, position, speed):
-        zipped = [[pos, speed] for pos, speed in zip(position, speed)]
-        zipped.sort()
 
-
+        # initialize stack
         stack = []
 
-        for car in zipped[::-1]:
-            est = (target - car[0]) / car[1]
+        # initialize cars
+        cars = [[pos, speed] for pos, speed in zip(position, speed)]
+        cars.sort()
 
-            while stack and stack[-1] >= est:
+        for pos, speed in cars[::-1]:
+            est_arrival = (target - pos) / speed
+
+            while stack and stack[-1] >= est_arrival:
                 stack.pop()
 
-            stack.append(est)
+            stack.append(est_arrival)
 
         return len(stack)
 
