@@ -15,38 +15,42 @@ A valid BST is defined as
 """
 
 """
-We can solve this using a recursive DFS 
+To solve, 
+we'll be doing this recursively 
 
-For each node, 
-we want to check if 
-left < node < right
+we'll set up our recursive function 
+and pass in node, leftBoundary, rightBoundary
+def dfs(node):
 
-we'll be passing in left, right in our recursive function 
-
-Our base case:
-if not node
+for our base case
+we'll say if not node:
 return True 
-bc an empty node can be considered a good bst 
 
-we'll do recursive calls on the nodes
-left and right children 
+for a node to be valid, 
+it must be 
+left < node.val < right
 
-In our recursive call to children 
-we pass in 
-node.left - for node.left, we know node.val is to the right.
-            as such, node.left < node.val 
-            In our dfs we say (left < node.val < right) 
-            - in this scenario, we'd want to pass in 
-            dfs(node, left, node.val)
-            so that the above can hold true 
-            
-node.right - similarly we want 
-             node.right > node.val 
-             so we pass in dfs(node.right, node.val, right)
-             such that right < node.val < left
-             ie. the parent node's val would be passed in to the right position 
+if not (left < node.val < right)
+return False 
 
-return true if if recursive calls for left, right child hold true 
+
+we'll update left, right boundaries 
+on each recursive call
+
+node.left must be smaller than node
+as such, we'll pass node.val as the right boundary 
+dfs(node.left, left, node.val)
+
+node.right must be larger than node 
+as such, we'll pass node.val as the left boundary 
+dfs(node.right, node.val, right)
+
+we'll return    (dfs(node.left, left, node.val) and 
+                dfs(node.right, node.val, right))
+                
+to initialize the recursive call 
+we return dfs(root, float(-inf), float(inf))
+                
 """
 
 class Solution(object):
