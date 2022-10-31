@@ -99,14 +99,13 @@ class Solution(object):
 
         # initialize maxHeap with negative counts
         maxHeap = [-count for count in charCount.values()]
-
         heapq.heapify(maxHeap)
-
-        # initialize time counter
-        time = 0
 
         # initialize que
         que = collections.deque()
+
+        # initialize time counter
+        time = 0
 
         while maxHeap or que:
             # increment time counter at each iteration
