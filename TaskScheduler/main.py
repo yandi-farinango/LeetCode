@@ -97,34 +97,32 @@ class Solution(object):
         # get charCount
         charCount = Counter(tasks)
 
-        # initialize maxHeap with negative counts
+        # initialize maxHeap
         maxHeap = [-count for count in charCount.values()]
         heapq.heapify(maxHeap)
-
-        # initialize que
-        que = collections.deque()
 
         # initialize time counter
         time = 0
 
+        # initialize que
+        que = collections.deque()
+
         while maxHeap or que:
-            # increment time counter at each iteration
+            # increment timer at each iteration
             time += 1
 
-            # pop most frequent
-            # and decrement cnt
             if maxHeap:
-                cnt = 1 + heapq.heappop(maxHeap)
+                updated_count = 1 + heapq.heappop(maxHeap)
 
-                # append [cnt, time + idle] to que
-                if cnt:
-                    que.append([cnt, time + n])
+                if updated_count:
+                    # append [updated_count, time + cooldown] to que
+                    que.append([updated_count, time + n])
 
             # when we reach a time
             # such that a task can be processed again,
             # we pop from our que and add it back to maxHeap
             if que and que[0][1] == time:
-                heapq.heappush(maxHeap, que.popleft()[0])   # we only need to add cnt
+                heapq.heappush(maxHeap, que.popleft()[0])
 
         return time
 
