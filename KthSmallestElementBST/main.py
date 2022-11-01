@@ -28,6 +28,8 @@ We can do this using a stack
 We know that in a BST the smallest values are going to be the leftmost
 we want to shift our pointer in the leftmost direction 
 
+we'll have a variable current = root 
+
 while current or stack 
     while current 
         append left values to our stack 
