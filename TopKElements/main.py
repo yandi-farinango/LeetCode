@@ -7,32 +7,44 @@ You may return the answer in any order.
 
 
 """
-To solve this problem we can:
+To solve 
 
-Start by mapping numbers:frequency
-We can do this using a dictionary 
-update frequency as we traverse through the array 
+we'll need to initialize an ans variable
+where well be appending the k most freq vals 
 
-We can then use a BUCKET array 
-to sort frequencies 
-where frequency corresponds to
-BUCKET array indices 
+We'll need to use a freqMap to count the frequencies of the numbers 
 
-Finally, we'll need to return our ans 
-in a result array 
+We can then use a bucket array [[]] 
+where indices correspond the the frequencies 
+and values correspond to numbers with the matching frequency 
 
-We will be adding numbers
-to our result array 
-as we traverse BUCKET in reverse 
+we'll need to initialize our bucket to have 
+len nums + 1 buckets 
+ie bucket = [[] for i in range (len(nums) + 1]
 
-if length(result) == k
-we'll return result 
+We'll need to traverse freqMap 
+for number, count in freqMap.items()
+
+bucket[count].append(number)
+
+we can then traverse the bucket array in reverese 
+ie starting with the most frequent bucket 
+
+    we'll have to traverse for number in bucket 
+    
+    and append to ans 
+    
+    if len(res) == k
+    
+    return res
+    
 """
 
 
 class Solution(object):
     def topKFrequent(self, nums, k):
 
+        # get freqCount
         freqMap = {}
         bucket = [[] for i in range(len(nums) + 1)]
         # bucket = [[]] * (len(nums) + 1)
@@ -43,13 +55,16 @@ class Solution(object):
         for number, count in freqMap.items():
             bucket[count].append(number)
 
-        res = []
+        ans = []
 
+        # traverse bucket in reverse
         for index in range(len(bucket) - 1, -1, -1):
+
+            # traverse numbers in bucket
             for numbers in bucket[index]:
-                res.append(numbers)
-                if len(res) == k:
-                    print(res)
+                ans.append(numbers)
+                if len(ans) == k:
+                    return ans
 
 
 if __name__ == "__main__":
