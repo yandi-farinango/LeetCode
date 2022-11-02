@@ -54,6 +54,7 @@ class Solution(object):
         if len(s1) > len(s2):
             return False
 
+        # initialize sMaps
         s1map = [0] * 26
         s2map = [0] * 26
 
