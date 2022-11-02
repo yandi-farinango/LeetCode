@@ -64,33 +64,35 @@ return -1
 
 class Solution(object):
     def search(self, nums, target):
+
+        # initialize pointers
         left, right = 0, len(nums) - 1
 
         while left <= right:
             mid = (left + right) // 2
 
-            # return mid
+            """We've found our target"""
             if target == nums[mid]:
                 return mid
 
-            # check which section we are in
-
-            # left portion
+            # mid corresponds to LEFT
             if nums[left] <= nums[mid]:
+
+                # search RIGHT
                 if target > nums[mid] or target < nums[left]:
-                    # search right
                     left = mid + 1
+
+                # search LEFT
                 else:
-                    # search left
                     right = mid - 1
 
-            # right portion
+            # mid corresponds to RIGHT
             else:
+                # search LEFT
                 if target < nums[mid] or target > nums[right]:
-                    # search left
                     right = mid - 1
                 else:
-                    # search right
+                    # search RIGHT
                     left = mid + 1
 
         return -1
@@ -100,7 +102,7 @@ if __name__ == '__main__':
     nums = [4, 5, 6, 7, 0, 1, 2]
     nums2 = [1]
     nums3 = [5, 1, 3]
-    nums4 = [3,1]
+    nums4 = [3, 1]
 
     target = 0
     target2 = 3
