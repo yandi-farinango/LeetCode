@@ -83,7 +83,7 @@ class Solution(object):
         def dfs(i, current, total):
             # base case
             if total == target:
-                ans.append(current.copy())
+                ans.append(list(current))
                 return
 
             # base case
