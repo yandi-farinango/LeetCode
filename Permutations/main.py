@@ -77,6 +77,7 @@ return ans
 
 class Solution(object):
     def permute(self, nums):
+
         # initialize ans
         ans = []
 
@@ -84,24 +85,22 @@ class Solution(object):
         if len(nums) == 1:
             return [nums[:]]
 
-        # we pop the 0th value
         for i in range(len(nums)):
-            n = nums.pop(0)
+            # pop the 0th index
+            num = nums.pop(0)
 
-            # recursively find the permutation for the remaining 2 values
-            perms = self.permute(nums)
+            # get the permutation of the remaining vals
+            permutations = self.permute(nums)
 
-            # for each permutation,
-            # that the recursive call above returns,
-            # we'll add back the number we just popped
-            for perm in perms:
-                perm.append(n)
+            for permutation in permutations:
+                # append num to the end of permutations
+                permutation.append(num)
 
-            # we add both updated permutations to ans
-            ans.extend(perms)
+            # append permutations to ans
+            ans.extend(permutations)
 
-            # we append number back to nums
-            nums.append(n)
+            nums.append(num)
+
         return ans
 
 
