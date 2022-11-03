@@ -10,62 +10,44 @@ duplicate subsets
 """
 
 """
-We're going to solve this recursively 
-For recursive problems, 
-its helpful to visualize 
-the decision tree 
-- included in drawing.png 
+We'll be solving this recursively 
 
-Similar to Subsets1 
-for each index 
-we have a choice 
-whether to include 
-nums[index]
+At each index, we have the decision
+whether to include nums[index]
 
-For our solution, 
-we'll initialize ans = []
+we'll be making this decision recursively 
+so for setting up our recursive function 
+we'll be passing in 
+def recursive(index, subset)
 
-we do NOT want our final solution 
-to include duplicate subsets 
-
-To do this, 
-we can sort our array 
-and, 
-for every nums[index]
-if it is a duplicate, 
-we'll skip over the index 
-
-
-we'll set up our recursive function 
-def recursive(index, subset)4
-
-# BASE CASE 
-if i == len(nums):
-ans.append(subset[::])
+For our base case 
+if index > len(nums):
+ans.append(subset)
 return 
 
+for the decision to include nums[index]
+subset.append(nums[index])
+and we do our recursive call on 
+recursive(index + 1, subset)
 
-For our recursive logic 
+for the decision NOT TO include nums[index]
+we'll pop from our subset 
+subset.pop()
 
-We have the decision to include nums[index]
-    we'll append nums[i] to our subset
-    and we do our recursive call on the next index 
-    recursive(i + 1, subset)
-    
-    
-we'll pop nums.pop()
-    
-for the decision to  NOT include nums[index]
-But we also have to make sure i + 1 is not a duplicate 
-we can say 
-while i + 1 < len(nums) and nums[i] == nums[i + 1]
-i += 1 
+Our solution must not contain duplicate subsets 
 
-    and do a recursive call 
-recursive(i + 1, subset)
+To ensure our solution doesnt contain duplicate subsets 
+we'll shift our pointer 
+while index + 1 < len(nums) and index + 1 == nums[index]
+index += 1 
 
-we can call our recursive function 
-passing in 0 as starting index and empty list 
+and do our recursive call 
+recursive(index + 1, subset)
+
+We'll call our recursive function 
+recursive(0, [])
+
+and return ans 
 """
 
 
@@ -75,11 +57,10 @@ class Solution(object):
         # initialize ans
         ans = []
 
+        # sort nums
         nums.sort()
 
         def backtracking(index, subset):
-
-            # base case
             if index == len(nums):
                 ans.append(subset[::])
                 return
@@ -89,10 +70,10 @@ class Solution(object):
             # recursive call
             backtracking(index + 1, subset)
 
-            # decision NOT TO include nums[index]
+            # decision to NOT include nums[index]
             subset.pop()
 
-            while index + 1 < len(nums) and nums[index] == nums[index + 1]:
+            while index + 1 < len(nums) and nums[index + 1] == nums[index]:
                 index += 1
 
             # recursive call
