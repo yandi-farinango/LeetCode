@@ -90,13 +90,11 @@ class Solution(object):
             if i >= len(candidates) or total > target:
                 return
 
-            """recursive decision to include candidate """
             # append candidates[i]
             current.append(candidates[i])
             # recursive
             dfs(i, current, total + candidates[i])
 
-            """recursive decision NOT to include candidate"""
             # pop candidates[i]
             current.pop()
             # recursive
