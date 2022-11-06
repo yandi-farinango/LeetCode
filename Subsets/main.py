@@ -91,10 +91,9 @@ class Solution(object):
 
         # recursive function set to take in an index
         def dfs(index):
-
             # if our index is out of range, we've gone through every index in nums
             if index >= len(nums):
-                ans.append(list(subset))
+                ans.append(subset[::])
                 return
 
             # decision to include nums[index]
@@ -109,8 +108,33 @@ class Solution(object):
 
         return ans
 
+    def subsetsSolution2(self, nums):
+        # initialize ans
+        ans = []
+
+        # set up backtracking fn
+        def backtracking(index, subset):
+            # if we've gone through each index
+            if index >= len(nums):
+                ans.append(subset[::])
+            else:
+                # decision to include nums[index]
+                subset.append(nums[index])
+                # recursive
+                backtracking(index + 1, subset)
+
+                # decision to NOT include nums[index]
+                subset.pop()
+                # recursive
+                backtracking(index + 1, subset)
+
+        backtracking(0, [])
+
+        return ans
+
 
 if __name__ == '__main__':
     nums = [1, 2, 3]
 
     print(Solution().subsets(nums))
+    print(Solution().subsetsSolution2(nums))
