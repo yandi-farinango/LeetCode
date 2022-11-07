@@ -115,7 +115,7 @@ class Solution(object):
         # set up backtracking fn
         def backtracking(index, subset):
             # if we've gone through each index
-            if index >= len(nums):
+            if index == len(nums):
                 ans.append(subset[::])
             else:
                 # decision to include nums[index]
