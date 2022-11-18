@@ -109,24 +109,21 @@ class Solution(object):
         return ans
 
     def subsetsSolution2(self, nums):
-        # initialize ans
         ans = []
 
-        # set up backtracking fn
         def backtracking(index, subset):
-            # if we've gone through each index
-            if index == len(nums):
+            if index >= len(nums):
                 ans.append(subset[::])
-            else:
-                # decision to include nums[index]
-                subset.append(nums[index])
-                # recursive
-                backtracking(index + 1, subset)
+                return
 
-                # decision to NOT include nums[index]
-                subset.pop()
-                # recursive
-                backtracking(index + 1, subset)
+            # decision to include nums[index]
+            subset.append(nums[index])
+            # recursive call
+            backtracking(index + 1, subset)
+
+            # decision NOT to include nums[index]
+            subset.pop()
+            backtracking(index + 1, subset)
 
         backtracking(0, [])
 
