@@ -55,36 +55,32 @@ return nums[p]
 
 class Solution(object):
     def findKthLargest(self, nums, k):
-
         target_index = len(nums) - k
 
         def quickSelect(left, right):
-            pivot, p = nums[right], left
+            p, pivot = left, nums[right]
 
             # partition
             for i in range(left, right):
                 if nums[i] <= pivot:
-                    # swap nums
                     nums[i], nums[p] = nums[p], nums[i]
-
                     # increment p
                     p += 1
 
-                    # swap pivot and p
+            # swap nums[p], nums[right]
             nums[p], nums[right] = nums[right], nums[p]
 
             if target_index < p:
-                # search down by adjusting our right pointer p-1
+                # search DOWN by adjusting right pointer p - 1
                 return quickSelect(left, p - 1)
 
             elif target_index > p:
-                # search up by adjusting our left pointer p+1
-                return quickSelect(p + 1, right)
+                # search UP by adjusting left pointer p + 1
+                return quickSelect(left + 1, right)
 
             else:
                 return nums[p]
 
-        # recursive call
         return quickSelect(0, len(nums) - 1)
 
 
