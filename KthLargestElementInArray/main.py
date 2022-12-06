@@ -75,7 +75,7 @@ class Solution(object):
                 return quickSelect(left, p - 1)
 
             elif target_index > p:
-                # search UP by adjusting left pointer p + 1
+                # search UP by adjusting left pointer left + 1
                 return quickSelect(left + 1, right)
 
             else:
